@@ -24,11 +24,11 @@ class Order(AbstractBaseModel):
     payment_status = models.BooleanField(default=False, verbose_name='Payment Status')
     delivery_status = models.CharField(max_length=20, choices=DELIVERY_STATUS_CHOICES, default='pending')
 
-    @property
-    def order_date_shamsi(self):
-        """ Returns the order date of the discount in Shamsi (Persian) calendar format. """
-        shamsi_datetime = jdatetime.fromgregorian(datetime=self.order_date)
-        return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
+    # @property
+    # def order_date_shamsi(self):
+    #     """ Returns the order date of the discount in Shamsi (Persian) calendar format. """
+    #     shamsi_datetime = jdatetime.fromgregorian(datetime=self.order_date)
+    #     return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
 
     def __str__(self):
         return f"Order: {self.id}, Payment Status: {self.payment_status}, Delivery Status: {self.delivery_status}"
@@ -41,11 +41,11 @@ class Transaction(AbstractBaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
 
-    @property
-    def transaction_date_shamsi(self):
-        """ Returns the transaction date of the discount in Shamsi (Persian) calendar format. """
-        shamsi_datetime = jdatetime.fromgregorian(datetime=self.transaction_date)
-        return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
+    # @property
+    # def transaction_date_shamsi(self):
+    #     """ Returns the transaction date of the discount in Shamsi (Persian) calendar format. """
+    #     shamsi_datetime = jdatetime.fromgregorian(datetime=self.transaction_date)
+    #     return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
 
     def __str__(self):
         return f"Transaction #{self.id} - Order: {self.order.id} - Amount: {self.amount}"
