@@ -128,12 +128,12 @@ class DiscountCodeModelTest(TestCase):
         self.assertEqual(discount_code.start_date, start_date)
         self.assertEqual(discount_code.end_date, end_date)
 
-    def test_discount_code_start_date_shamsi(self):
-        start_date = timezone.now()
-        discount_code = DiscountCode.objects.create(code=54321, start_date=start_date, end_date=start_date + timezone.timedelta(days=5), percentage=15)
+    # def test_discount_code_start_date_shamsi(self):
+    #     start_date = timezone.now()
+    #     discount_code = DiscountCode.objects.create(code=54321, start_date=start_date, end_date=start_date + timezone.timedelta(days=5), percentage=15)
 
-        shamsi_start_date = discount_code.start_date_shamsi
-        expected_shamsi_start_date = start_date.strftime('%Y/%m/%d %H:%M:%S')
+    #     shamsi_start_date = discount_code.start_date_shamsi
+    #     expected_shamsi_start_date = start_date.strftime('%Y/%m/%d %H:%M:%S')
 
 
 class CommentModelTest(TestCase):

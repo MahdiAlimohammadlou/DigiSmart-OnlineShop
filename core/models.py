@@ -9,15 +9,15 @@ class AbstractBaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     deleted = models.BooleanField(default=False)
 
-    @property
-    def created_at_shamsi(self):
-        shamsi_datetime = jdatetime.fromgregorian(datetime=self.created_at)
-        return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
+    # @property
+    # def created_at_shamsi(self):
+    #     shamsi_datetime = jdatetime.fromgregorian(datetime=self.created_at)
+    #     return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
 
-    @property
-    def updated_at_shamsi(self):
-        shamsi_datetime = jdatetime.fromgregorian(datetime=self.updated_at)
-        return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
+    # @property
+    # def updated_at_shamsi(self):
+    #     shamsi_datetime = jdatetime.fromgregorian(datetime=self.updated_at)
+    #     return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
 
     def delete(self):
         self.deleted = True
@@ -58,17 +58,17 @@ class AbstractDiscountModel(AbstractBaseModel):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
-    @property
-    def start_date_shamsi(self):
-        """ Returns the start date of the discount in Shamsi (Persian) calendar format. """
-        shamsi_datetime = jdatetime.fromgregorian(datetime=self.start_date)
-        return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
+    # @property
+    # def start_date_shamsi(self):
+    #     """ Returns the start date of the discount in Shamsi (Persian) calendar format. """
+    #     shamsi_datetime = jdatetime.fromgregorian(datetime=self.start_date)
+    #     return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
 
-    @property
-    def end_date_shamsi(self):
-        """ Returns the end date of the discount in Shamsi (Persian) calendar format. """
-        shamsi_datetime = jdatetime.fromgregorian(datetime=self.end_date)
-        return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
+    # @property
+    # def end_date_shamsi(self):
+    #     """ Returns the end date of the discount in Shamsi (Persian) calendar format. """
+    #     shamsi_datetime = jdatetime.fromgregorian(datetime=self.end_date)
+    #     return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
 
     def save(self, *args, **kwargs):
         """ Overrides the save method to validate and set the discount type. """

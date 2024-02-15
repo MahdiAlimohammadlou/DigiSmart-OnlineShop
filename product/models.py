@@ -7,22 +7,35 @@ class Category(AbstractSlugModel):
     """ A model representing a category with an option to be a sub-category. """
 
     is_sub = models.BooleanField(default=False)
-    parent = models.ForeignKey('self', on_delete = models.CASCADE, null=True, blank=True, related_name='sub_categories')
+    is_parent = models.BooleanField(default=False)
+    parent = models.ForeignKey('self', on_delete = models.SET_NULL, null=True, blank=True, related_name='sub_categories')
     image = models.ImageField(upload_to = 'categories/')
+
+    def save(self, *args, **kwargs):
+        if self.parent:
+            self.is_sub = True
+            parent : Category = self.parent
+            parent.is_parent = True
+            parent.save()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if self.is_parent:
+            self.sub_categories.all().update(is_sub=False)
+        super().delete(*args, **kwargs)
     
 
 class Brand(AbstractSlugModel):
     #  """ A model representing a brand. """
     #    
     image = models.ImageField(upload_to = 'brands/')
-    
+
 
 class Product(AbstractSlugModel):
     """ A model representing a product with its category, brand, image, price, and inventory. """
 
     category = models.ForeignKey(Category, on_delete = models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete = models.CASCADE)
-    images = models.ManyToManyField('ProductImage', blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.PositiveIntegerField()
 
@@ -32,8 +45,10 @@ class Product(AbstractSlugModel):
         
         return self.inventory > 0
 
+
 class ProductImage(AbstractBaseModel):
     image = models.ImageField(upload_to='products/')
+    product = models.ForeignKey(Product, on_delete = models.CASCADE)
     
 
 class Discount(AbstractDiscountModel):
