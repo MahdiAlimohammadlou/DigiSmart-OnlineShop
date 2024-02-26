@@ -18,17 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
-from accounts.views import RegisterView
+from rest_framework_simplejwt import views as jwt_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include('djoser.urls.jwt')),
+    path('auth/', include('djoser.urls')),
     path('', include('product.urls', namespace = 'product')),
-    path('login/', obtain_jwt_token), 
-    path('refresh-token/', refresh_jwt_token),
-    path('verify-token/', verify_jwt_token), 
-    path('register/', RegisterView.as_view()), 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

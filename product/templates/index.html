@@ -33,29 +33,26 @@
                             <div class="col-lg-9 pl">
                                 <div class="header-search row text-right">
                                     <div class="header-search-box">
-                                        <form action="#" class="form-search">
+                                        <form method="post" id="search-form" action="/products-search/" class="form-search">
+                                            {% csrf_token %}
                                             <input type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
-                                            {% comment %} <div class="action-btns">
+                                            <input id="search-type" type="hidden" name="search-type" >
+                                            <div class="action-btns">
                                                 <button class="btn btn-search" type="submit">
                                                     <i class="fa fa-search"></i>
                                                 </button>
                                                 <div class="search-filter">
                                                     <div class="form-ui">
                                                         <div class="custom-select-ui">
-                                                            <select class="right">
-                                                                <option>همه دسته ها</option>
-                                                                <option>کالای دیجیتال</option>
-                                                                <option>آرایشی بهداشتی</option>
-                                                                <option>ابزاری اداری</option>
-                                                                <option>مد پوشاک</option>
-                                                                <option>خانه آشپز خانه</option>
-                                                                <option>لوازم تحریر و هنر</option>
-                                                                <option>کودک و نوزاد</option>
-                                                              </select>
+                                                            <select id = "search-options" class="right">
+                                                                <option data-type="title">نام محصول</option>
+                                                                <option data-type="category">دسته بندی</option>
+                                                                <option data-type="beand">برند</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div> {% endcomment %}
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -2158,5 +2155,4 @@
 <!-- home js---------------------------------------------------->
 <script src="/static/assets/js/home.js"></script>
 <script src="/static/assets/js/common.js"></script>
-</script>
 </html>

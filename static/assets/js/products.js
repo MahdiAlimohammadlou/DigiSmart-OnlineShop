@@ -47,23 +47,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 productsContainer.appendChild(productContainer);
                 let thumbnailA = document.querySelector(`#a-${product.id}`);
-                console.log("Hello",thumbnailA);
+
                 if (product.discount_percentage != null) {
                     thumbnailA.innerHTML = `
                         <div class="promotion-badge">فروش ویژه</div>
-                        
                         <div class="discount-d">
                             <span>${product.discount_percentage}%</span>
                         </div>
                         <img src="${product.images[0].image}">
                     `;
                 } else {
-                    console.log(product.images[0].image);
                     thumbnailA.innerHTML = `
                         <img src="${product.images[0].image}">
                     `;
                 }
-                console.log(productContainer);
+
+
             });
         })
         .catch(error => {

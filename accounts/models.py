@@ -5,19 +5,19 @@ from .managers import UserManager
 from core.models import AbstractBaseModel
 
 # Create your models here.
-class User(AbstractBaseUser, PermissionsMixin, AbstractBaseModel):
+class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model representing a user account."""
 
     email = models.EmailField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=11, unique=True)
-    full_name = models.CharField(max_length=100)
+    full_name = models.CharField(max_length=100, null = True, blank = True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["phone_number", "full_name"]
+    REQUIRED_FIELDS = ["phone_number"]
 
     # def has_perm(self, perm, obj = None):
     #     return True

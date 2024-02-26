@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.views import View
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from .models import Product, Category, Brand
 from .serializers import ProductSerializer, CategorySerializer, BrandSerializer
 from django.db.models import Q
 from django.utils.translation import gettext as _
+
 
 # Create your views here.
 #render views
@@ -17,6 +18,13 @@ class HomeView(View):
 class ProductsView(View):
     def get(self, request):
         return render(request, 'products.html')
+
+class ProductsSearchView(View):
+    def post(self, request):
+        search_input = request.POST.get("search-input", None)
+        search_type = request.POST.get("search-type", None)
+        if search_input is not None and search_input is not None:
+            return redirect(f"/products/?{search_type}={search_input}")
 
 class ProductView(View):
     def get(self, request):
@@ -54,9 +62,9 @@ class CategoryViewSet(viewsets.ViewSet):
         queryset = Category.objects.all()
 
         # Filter categories based on title, if provided in query parameters
-        category = request.query_params.get('title', None)
-        if category:
-            queryset = queryset.filter(title = category)
+        title = request.query_params.get('title', None)
+        if title:
+            queryset = queryset.filter(Q(title__icontains=title) | Q(title__icontains=_(title)))
 
         serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data)

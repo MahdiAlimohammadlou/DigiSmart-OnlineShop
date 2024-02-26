@@ -9,16 +9,6 @@ class AbstractBaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     deleted = models.BooleanField(default=False)
 
-    # @property
-    # def created_at_shamsi(self):
-    #     shamsi_datetime = jdatetime.fromgregorian(datetime=self.created_at)
-    #     return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
-
-    # @property
-    # def updated_at_shamsi(self):
-    #     shamsi_datetime = jdatetime.fromgregorian(datetime=self.updated_at)
-    #     return shamsi_datetime.strftime('%Y/%m/%d %H:%M:%S')
-
     def delete(self):
         self.deleted = True
         self.save()

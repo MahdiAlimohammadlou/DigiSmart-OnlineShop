@@ -77,7 +77,10 @@ class ProductImageModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        ProductImage.objects.create(image='test_image.jpg')
+        category = Category.objects.create(title='Test Category', description='This is a test category')
+        brand = Brand.objects.create(title='Test Brand', description='This is a test brand')
+        product = Product.objects.create(title='Test Product', description='This is a test product', category=category, brand=brand, price=10.0, inventory=100)
+        ProductImage.objects.create(image='test_image.jpg', product=product)
 
     def test_image_upload(self):
         product_image = ProductImage.objects.get(id=1)

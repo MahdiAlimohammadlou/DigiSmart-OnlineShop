@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-  
+
         //    hover-menu-overlay--------------------------
             $('li.nav-overlay').hover(function(){
                 $('.mega-menu-level-two').removeClass('active');
@@ -236,8 +236,19 @@ $(document).ready(function(){
         // add-product-wishes----------------------------
 
         // nice-select-----------------------------------
+
         if($('.custom-select-ui').length){
             $('.custom-select-ui select').niceSelect();
+
+            $('.custom-select-ui select').on('change', function() {
+                let serachType = $(".current").html();
+                const searchTypes = {
+                    "نام محصول" : "title",
+                    "دسته بندی" : "category",
+                    "برند" : "brand"
+                }
+                $("#search-type").val(searchTypes[serachType]);
+            });
         }
 
         //    price-range--------------------------------
