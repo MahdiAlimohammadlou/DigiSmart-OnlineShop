@@ -21,6 +21,7 @@ function verify_opt(phone, enteredOTP) {
         return response.json();
     })
     .then(data => {
+        console.log(data);
         localStorage.setItem("refresh", data.refresh);
         localStorage.setItem("access", data.access);
         if (data.is_new_user) {

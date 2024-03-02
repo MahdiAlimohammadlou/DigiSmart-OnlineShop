@@ -26,20 +26,19 @@
                         <a href="#" class="account-box-logo">digismart</a>
                         <div class="account-box">
                             <div class="account-box-headline">
-                                <a href="login.html" class="login-ds">
+                                <a href="/account/login/" class="login-ds">
                                     <span class="title">ورود</span>
                                     <span class="sub-title">به دیجی اسمارت</span>
                                 </a>
-                                <a href="register.html" class="register-ds active">
+                                <a href="" class="register-ds active">
                                     <span class="title">ثبت نام</span>
                                     <span class="sub-title">در دیجی اسمارت</span>
                                 </a>
                             </div>
                             <div class="Login-to-account mt-4">
-                                <div class="account-box-content">
+                                <div class="account-box-content text-right">
                                     <h4>ثبت نام در دیجی اسمارت</h4>
-                                    <form method = "post" action="/account/register/" class="form-account text-right">
-                                        {% csrf_token %}
+                                    {% comment %} <form method = "post" action="/account/register/" class="form-account text-right"> {% endcomment %}
                                         <div class="form-account-title">
                                             <label for="phone-account">شماره موبایل</label>
                                             <input type="text" class="number-email-input" id="email-phone" name="phone-account">
@@ -65,7 +64,7 @@
                                         <div class="form-row-account">
                                             <button id = "register-btn" class="btn btn-primary btn-register">ثبت نام در دیجی اسمارت</button>
                                         </div>
-                                    </form>
+                                    {% comment %} </form> {% endcomment %}
                                 </div>
                             </div>
                         </div>

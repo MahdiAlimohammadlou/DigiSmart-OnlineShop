@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود</title>
+    <title>ورود با رمز یکبار مصرف</title>
     <!-- font---------------------------------------->
     <link rel="stylesheet" href="/static/assets/css/vendor/font-awesome.min.css">
     <link rel="stylesheet" href="/static/assets/css/vendor/materialdesignicons.css">
@@ -23,42 +23,20 @@
             <section class="page-account-box">
                 <div class="col-lg-6 col-md-6 col-xs-12 mx-auto">
                     <div class="ds-userlogin">
-                        <a href="#" class="account-box-logo">digismart</a>
+                        <a href="/" class="account-box-logo">digismart</a>
                         <div class="account-box">
-                            <div class="account-box-headline">
-                                <a href="" class="login-ds active">
-                                    <span class="title">ورود</span>
-                                    <span class="sub-title">به دیجی اسمارت</span>
-                                </a>
-                                <a href="/account/register/" class="register-ds">
-                                    <span class="title">ثبت نام</span>
-                                    <span class="sub-title">در دیجی اسمارت</span>
-                                </a>
-                            </div>
                             <div class="Login-to-account mt-4">
-                                <div class="account-box-content text-right">
-                                    <h4>ورود به حساب کاربری</h4>
-                                    {% comment %} <form action="#" class="form-account text-right"> {% endcomment %}
-                                        <div class="form-account-title">
+                                <div class="account-box-content">
+                                    <h4 class="mb-2">ورود با رمز یکبار مصرف</h4>
+                                    <p>شماره موبایل خود را وارد نمایدد</p>
+                                    {% comment %} <form action="#" class="form-account "> {% endcomment %}
+                                        <div class="form-account-title text-right">
                                             <label for="email-phone">شماره موبایل</label>
-                                            <input type="text" id="phone-input" class="number-email-input" id="phone" name="phone">
+                                            <input type="text" class="number-email-input" id="phone-input" name="email-account">
                                             <span class="error-message" id="phone-error-message"></span>
                                         </div>
-                                        <div class="form-account-title">
-                                            <label for="password">رمز عبور</label>
-                                            <a href="/account/opt-login/" class="account-link-password">ورود با رمز یکبار مصرف</a>
-                                            <input type="password" id="password-input" class="password-input" name="password-account">
-                                            <span class="error-message" id="password-error-message"></span>
-                                        </div>
-                                        {% comment %} <div class="form-auth-row">
-                                            <label for="#" class="ui-checkbox mt-1">
-                                                <input type="checkbox" value="1" name="login" id="remember">
-                                                <span class="ui-checkbox-check"></span>
-                                            </label>
-                                            <label for="remember" class="remember-me mr-0">مرا به خاطر بسپار</label>
-                                        </div> {% endcomment %}
                                         <div class="form-row-account">
-                                            <button id="login-btn" class="btn btn-primary btn-login">ورود به دیجی اسمارت</button>
+                                            <button id="send-otp-btn" class="btn btn-primary btn-login">ارسال رمز یکبار مصرف</button>
                                         </div>
                                     {% comment %} </form> {% endcomment %}
                                 </div>
@@ -70,7 +48,7 @@
         </div>
     </div>
 </div>
-<!-- login---------------------------------->
+<!-- login----------------------------------->
                    
 <!-- scroll_Progress------------------------>
 <div class="progress-wrap">
@@ -81,7 +59,7 @@
 <!-- scroll_Progress------------------------>
 
 </body>
-<!-- file js-------------------------------------------------->
+<!-- file js---------------------------------------------------->
 <script src="/static/assets/js/vendor/jquery-3.2.1.min.js"></script>
 <script src="/static/assets/js/vendor/bootstrap.js"></script>
 <!-- plugin---------------------------------------------------->
@@ -93,6 +71,6 @@
 <script src="/static/assets/js/vendor/nouislider.min.js"></script>
 <!-- main js---------------------------------------------------->
 <script src="/static/assets/js/main.js"></script>
-<script src="/static/assets/js/login.js"></script>
+<script src="/static/assets/js/otp-login.js"></script>
 <script src="/static/assets/js/utils.js"></script>
 </html>

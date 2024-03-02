@@ -6,6 +6,7 @@ from .views import (
     check_user_existence,
     generate_and_store_otp,
     verify_otp,
+    OtpLoginView,
     WelcomeView
 )
 
@@ -16,10 +17,10 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name = 'login'),
     path('verify-phone-number/', VerifyView.as_view(), name='verify'),
     path('welcome/', WelcomeView.as_view(), name='welcome'),
+    path('otp-login/', OtpLoginView.as_view()),
     #API urls
     path('check-user-existence/<str:phone_number>/', check_user_existence, name = 'check_user_existence'),
     path('generate-otp/', generate_and_store_otp, name='generate_otp'),
     path('verify-otp/', verify_otp, name='verify_otp'),
     # path('password-change/', ProductView.as_view(), name = 'product'),
-    # path('password-forgot/', include(router.urls)),
 ]

@@ -1,9 +1,11 @@
 
+//Validate phone number format
 function validatePhoneNumber(phoneNumber) {
-    const phoneRegex = /^(\d{11})|(\d{3}\s\d{4}\s\d{4})$/;
+    const phoneRegex = /^(09\d{9})$/;
     return phoneRegex.test(phoneNumber);
 }
 
+//Validate password format
 function validatePassword(password) {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
     const messages = [
@@ -26,4 +28,10 @@ function validatePassword(password) {
     }
 
     return null;
+}
+
+//Redirect to login page
+function redirectToLogin(pathName) {
+    localStorage.setItem("privies_page", pathName);
+    window.location = "account/login/";
 }
