@@ -23,9 +23,15 @@ from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    #Athentication urls
     path('auth/', include('djoser.urls.jwt')),
+    path('auth/', include('djoser.urls.authtoken')),
     path('auth/', include('djoser.urls')),
+
+    #Apps urls
     path('', include('product.urls', namespace = 'product')),
+    path('account/', include('accounts.urls', namespace = 'accounts')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

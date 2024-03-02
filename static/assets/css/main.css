@@ -7717,3 +7717,7 @@ body.light .progress-wrap svg.progress-circle path {
 	stroke: var(--black-blue);
 }
 
+.error-message {
+    color: red;
+    display: none;
+}

@@ -1,4 +1,5 @@
 
+
  //Start load categories
 
  let catesUl = document.querySelector("#cat-menu")
@@ -28,14 +29,7 @@
      .catch(error => {
          console.error('خطا در دریافت اطلاعات:', error);
      });
+
 //End load categories
 
-// Start search form
-document.querySelector('#search-options').addEventListener('change', function() {
-    // var selectedOption = this.options[this.selectedIndex];
-    // var dataType = selectedOption.getAttribute('data-type');
-    console.log("Hello");
-});
-
-// End search form
 

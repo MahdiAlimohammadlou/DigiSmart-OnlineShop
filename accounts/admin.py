@@ -17,7 +17,7 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ("email", "phone_number", "is_admin")
+    list_display = ("phone_number", "full_name", "is_admin")
     list_filter = ("is_admin",)
 
     fieldsets = (
@@ -29,7 +29,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {"fields" : ("phone_number", "email", "full_name", "password1", "password2")}),
     )
 
-    search_fields = ("email", "full_name")
+    search_fields = ("email", "full_name", "phone_number",)
     ordering = ("full_name",)
     filter_horizontal = ()
 

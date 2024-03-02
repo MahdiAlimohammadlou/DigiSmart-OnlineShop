@@ -7,6 +7,8 @@ from .models import Product, Category, Brand
 from .serializers import ProductSerializer, CategorySerializer, BrandSerializer
 from django.db.models import Q
 from django.utils.translation import gettext as _
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
