@@ -93,37 +93,65 @@ $(document).ready(function(){
         });
 
         // brand---------------------------------------
-        $(".product-carousel-brand").owlCarousel({
-            items:4,
-            rtl: true,
-            margin: 10,
-            nav: true,
-            navText: ['<i class="fa fa-angle-right"></i>', '<i class="fa fa-angle-left"></i>'],
-            dots: false,
-            responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1,
-                    slideBy: 1
-                },
-                576: {
-                    items: 1,
-                    slideBy: 1
-                },
-                768: {
-                    items: 3,
-                    slideBy: 2
-                },
-                992: {
-                    items: 5,
-                    slideBy: 2
-                },
-                1400: {
-                    items: 5,
-                    slideBy: 3
-                }
+
+        async function getBrands() {
+            try {
+              const response = await fetch('/api/brands/');
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              const data = await response.json();
+              data.forEach(brand => {
+                let item = $('<div></div>', {
+                    'class': 'owl-item active',
+                    'css': {
+                      'width': '190.75px',
+                      'margin-left': '10px'
+                    },
+                    'html': `<div class="item"><a href="#" class="d-block hover-img-link mt-0"><img src="${brand.image}" class="img-fluid img-brand" alt=""></a></div>`
+                  });
+                $("#brand-container").append(item);  
+              });
+            } catch (error) {
+              console.error('Error fetching brands:', error);
             }
-        });
+
+            $(".product-carousel-brand").owlCarousel({
+                items:4,
+                rtl: true,
+                margin: 10,
+                nav: true,
+                navText: ['<i class="fa fa-angle-right"></i>', '<i class="fa fa-angle-left"></i>'],
+                dots: false,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        slideBy: 1
+                    },
+                    576: {
+                        items: 1,
+                        slideBy: 1
+                    },
+                    768: {
+                        items: 3,
+                        slideBy: 2
+                    },
+                    992: {
+                        items: 5,
+                        slideBy: 2
+                    },
+                    1400: {
+                        items: 5,
+                        slideBy: 3
+                    }
+                }
+            });
+
+          }
+        
+        getBrands();
+        
         // brand---------------------------------------
 
         // Symbol--------------------------------------
@@ -249,7 +277,6 @@ $(document).ready(function(){
 
         if($('.custom-select-ui').length){
             $('.custom-select-ui select').niceSelect();
-            console.log("HEllo");
             set_search_type();
             $('.custom-select-ui select').on('change', function() {
                 set_search_type();

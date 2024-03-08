@@ -35,3 +35,63 @@ function redirectToLogin(pathName) {
     localStorage.setItem("privies_page", pathName);
     window.location = "account/login/";
 }
+
+
+//Verify Token
+function verifyJWT(token) {
+    return fetch('/auth/jwt/verify/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: token
+        })
+    })
+    .then(response => {
+        if (response.status === 200) {
+            return true;
+        } else if (response.status === 401) {
+            return false;
+        } else {
+            throw new Error('Unexpected response status: ' + response.status);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        return false;
+    });
+}
+
+//Refresh token
+function refreshJWT(token) {
+    return fetch('auth/jwt/refresh/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            refresh: token
+        })
+    })
+    .then(response => {
+        if (response.status === 200) {
+            return response.json().then(data => data.access);
+        } else if (response.status === 401) {
+            return false;
+        } else {
+            throw new Error('Unexpected response status: ' + response.status);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        throw error;
+    });
+}
+
+//Logout function
+function logout() {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+    location.reload(true);
+}

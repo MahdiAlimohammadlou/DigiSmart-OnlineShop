@@ -1,23 +1,40 @@
 
 //Getting primary data
 document.addEventListener('DOMContentLoaded', function() {
+
+    function addOrUpdatePageParamToUrl(pathname, pageValue) {
+        const urlObj = new URL(window.location.origin + pathname);
+        urlObj.searchParams.set('page', pageValue);
+        return urlObj.toString();
+    }
+
     //Get url params
     var urlParams = new URLSearchParams(window.location.search);
-    let apiUrl;
+    var page;
+    if (urlParams.has("page")) {
+        page = urlParams.get("page");
+    }
+    var apiUrl;
+    var url;
     if (urlParams.has('title')) {
         let paramValue = urlParams.get('title');
         let encodedParamValue = encodeURIComponent(paramValue);
-        apiUrl = `/api/products/?title=${encodedParamValue}`;
+        let url = `/api/products/?title=${encodedParamValue}`;
+        apiUrl = (page) ? addOrUpdatePageParamToUrl(url, page) : url;
     } else if (urlParams.has('category')) {
         let paramValue = urlParams.get('category');
         let encodedParamValue = encodeURIComponent(paramValue);
-        apiUrl = `/api/products/?category=${encodedParamValue}`;
+        let url = `/api/products/?category=${encodedParamValue}`;
+        apiUrl = (page) ? addOrUpdatePageParamToUrl(url, page) : url;
     } else if (urlParams.has('brand')) {
         let paramValue = urlParams.get('brand');
         let encodedParamValue = encodeURIComponent(paramValue);
-        apiUrl = `/api/products/?brand=${encodedParamValue}`;
+        let url = `/api/products/?brand=${encodedParamValue}`;
+        apiUrl = (page) ? addOrUpdatePageParamToUrl(url, page) : url;
     } else {
-        apiUrl = `/api/products/`;
+        let url = `/api/products/`;
+        apiUrl = (page) ? addOrUpdatePageParamToUrl(url, page) : url;
+        console.log("done");
     }
 
     //Start load products
@@ -25,7 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            data.forEach(product => {
+            let results = data.results;
+            results.forEach(product => {
                 let productContainer = document.createElement("div");
                 productContainer.className = "col-lg-3";
                 productContainer.classList.add("col-md-3", "col-xs-12", "order-1", "d-block", "mb-3");
@@ -61,14 +79,34 @@ document.addEventListener('DOMContentLoaded', function() {
                         <img src="${product.images[0].image}">
                     `;
                 }
-
-
             });
+
+            let previous = data.previous
+            let next = data.next
+            if (previous != null) {
+                $("#previous").attr('href', data.previous);
+            }
+            if (next != null) {
+                $("#next").attr('href', data.next);
+            }
+            let nextUl = $("#next-li");
+            
+            let count = data.count
+            let pageCount = Math.ceil(count / 1);
+            for (let index = 1; index < pageCount; index++) {
+                console.log(window.location.pathname);
+                const pageNumberLi = $('<li></li>', {
+                    'class': 'page-item',
+                    'html': `
+                            <a class="page-link" href="${addOrUpdatePageParamToUrl(window.location.pathname, index)}">${index}</a>
+                            `
+                });
+                nextUl.insertBefore(pageNumberLi);
+            }
+
         })
         .catch(error => {
             console.error('خطا در دریافت اطلاعات:', error);
         });
-
-
 });
 

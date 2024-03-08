@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from rest_framework.pagination import PageNumberPagination
 
 
 # Create your views here.
@@ -33,6 +34,13 @@ class ProductView(View):
         return render(request, 'product.html')
 
 #api views
+from rest_framework.pagination import PageNumberPagination
+
+class ProductPagination(PageNumberPagination):
+    page_size = 1
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 class ProductViewSet(viewsets.ViewSet):
     def list(self, request):
         queryset = Product.objects.all()
@@ -49,8 +57,10 @@ class ProductViewSet(viewsets.ViewSet):
         if brand:
             queryset = queryset.filter(Q(brand__title__icontains=brand) | Q(brand__title__icontains=_(brand)))
 
-        serializer = ProductSerializer(queryset, many=True)
-        return Response(serializer.data)
+        paginator = ProductPagination()
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = ProductSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     def retrieve(self, request, pk=None):
         queryset = Product.objects.all()

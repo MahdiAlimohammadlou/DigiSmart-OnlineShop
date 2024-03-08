@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: ./entry.sh
+    ports:
+      - 8000:8000
+    depends_on:
+      - redis
+    restart: on-failure
+    volumes:
+      - .:/app
+    # env_file or environment
+    env_file:
+      - .env
+    environment:
+      - SECRET_KEY=django-insecure-29(s(be=5!qhshi^icu$a^^cy-%so9vhu3h-y)zg0&2omviec5
+
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - 6379:6379
+    restart: always
+    environment:
+      - SECRET_KEY=0uwk9*8mltebnrrdn(zawxdyh-8b*s6$!0n(lb(cwlk+@otvzq
+    volumes:
+      - redisdata:/data
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - .:/app
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+      
+volumes:
+  redisdata:
