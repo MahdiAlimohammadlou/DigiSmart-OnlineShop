@@ -39,7 +39,7 @@ def generate_and_store_otp(request):
         otp_code = ''.join(random.choices(string.digits, k=5))
         r = redis.Redis(host=settings.REDIS_HOST, port=6379, db=0)
         r.setex(phone_number, 180, otp_code)
-        send_sms(phone_number, otp_code)
+        # send_sms(phone_number, otp_code)
         return Response({'status': 'successful'}, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
@@ -47,7 +47,7 @@ def verify_otp(request):
     if request.method == 'POST':
         phone_number = request.data.get('phone_number')
         entered_otp = request.data.get('entered_otp')
-        r = redis.Redis(host='', port=6379, db=0)
+        r = redis.Redis(host=settings.REDIS_HOST, port=6379, db=0)
         stored_otp = r.get(phone_number)
         if stored_otp and stored_otp.decode('utf-8') == entered_otp:
             selected_user = User.objects.get(phone_number = phone_number)
