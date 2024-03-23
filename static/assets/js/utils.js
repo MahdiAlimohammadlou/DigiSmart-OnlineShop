@@ -118,6 +118,7 @@ function refreshJWT(token) {
 
 //Logout function
 function logout() {
+    clearCartInCookie()
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     location.reload(true);
@@ -296,6 +297,11 @@ function removeFromCart(productId) {
     }
 }
 
+// Clear the cart in the cookie
+function clearCartInCookie() {
+    setCookie('cart', '', -1); // Set expiration date to past to clear the cookie
+    updateCartFront(); // Update the cart view in the front end
+}
 
 // Check if cart is empty
 function isCartEmpty() {

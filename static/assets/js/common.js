@@ -1,8 +1,18 @@
 
-$(window).on('load', function() {
-    getCartFromRedis();
-    updateCartFront();
-})
+$(window).on('load', async function() {
+    try {
+        const isAuthenticated = await checkAuthentication();
+        if (isAuthenticated) {
+            const token = localStorage.getItem("access");
+            const userInfo = await getUserProfile(token);
+            await getCartFromRedis(userInfo.phone_number);
+        }
+        updateCartFront();
+    } catch (error) {
+        console.error('Error occurred:', error);
+    }
+});
+
 
 //Start account section
 
