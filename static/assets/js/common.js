@@ -1,39 +1,10 @@
 
+$(window).on('load', function() {
+    getCartFromRedis();
+    updateCartFront();
+})
 
 //Start account section
-async function checkAuthentication() {
-    const accessToken = localStorage.getItem("access");
-    const refreshToken = localStorage.getItem("refresh");
-    let isAuthenticated = null;
-
-    if (accessToken) {
-        if (verifyJWT(accessToken)) {
-            isAuthenticated = true;
-        } else if (refreshToken) {
-            if (verifyJWT(refreshToken)) {
-                const newAccess = await refreshJWT(refreshToken);
-                if (newAccess) {
-                    localStorage.setItem("access", newAccess);
-                    isAuthenticated = true;
-                } else {
-                    // Handle case where new access token couldn't be obtained
-                }
-            }
-        }
-    } else if (refreshToken) {
-        if (verifyJWT(refreshToken)) {
-            const newAccess = await refreshJWT(refreshToken);
-            if (newAccess) {
-                localStorage.setItem("access", newAccess);
-                isAuthenticated = true;
-            } else {
-                // Handle case where new access token couldn't be obtained
-            }
-        }
-    }
-
-    return isAuthenticated;
-}
 
 checkAuthentication().then(isAuthenticated => {
     let accountContainer = $("#account-container");
@@ -71,7 +42,10 @@ checkAuthentication().then(isAuthenticated => {
         const loginLink = $('<a></a>', {
             'html': '<span class="title-account">ورود</span>'
         });
-        loginLink.attr('href', '/account/login/');
+        loginLink.click(function(event) {
+            event.preventDefault();
+            redirectToLogin();
+        });
 
         accountContainer.append(registerLink);
         accountContainer.append(loginLink);
@@ -79,9 +53,6 @@ checkAuthentication().then(isAuthenticated => {
 
     }
 })
-
-
-
 
 //End account section
 
@@ -118,3 +89,73 @@ if (catesUl) {
 //End load categories
 
 
+//Start Load cart
+function updateCartFront() {
+    $('#cart-products-ul').empty();
+    const cart = getCartFromCookie();
+    let totalPrice = 0;
+    let totalCount = 0;
+    if (!isCartEmpty()) {
+        cart.forEach(product => {
+        productCount = product.quantity;
+        let productLi = `<li class="mini-cart-item">
+                    <div class="mini-cart-item-content">
+                        <a href="" class="mini-cart-item-close remove-item" data-productid=${product.id}>
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <a href="" class="mini-cart-item-image d-block">
+                            <img src="${product.image}">
+                        </a>
+                        <span class="product-name-card">${product.title}</span>
+                        <div class="variation">
+                            <span class="variation-n">تعداد : </span>
+                            <p class="mb-0">${productCount}</p>
+                        </div>
+                        <div class="quantity"> 
+                            <span class="quantity-Price-amount"> ${product.strPrice}
+                                <span>تومان</span>
+                            </span> 
+                        </div> 
+                    </div> 
+                </li>`;
+        totalPrice += product.totalPrice;
+        totalCount += productCount;
+        $('#cart-products-ul').append(productLi);
+        });
+    } else {
+        let cartEmptyMessage = `<li class="mini-cart-item">
+                    <div class="mini-cart-item-content">
+                        سبد خرید شما خالی است.
+                    </div> 
+                </li>`;
+        $('#cart-products-ul').append(cartEmptyMessage);
+        totalCount = 0;
+        totalPrice = 0;
+    }
+
+    let strTotalCart = totalPrice.toLocaleString('fa', { maximumFractionDigits: 0 })
+
+    $(".total").html(`
+        ${strTotalCart} <span>تومان</span>
+    `);
+
+    $("#cart-products-count").text(totalCount);
+
+    //Remove cart button
+    $(".remove-item").click(function(event) {
+        event.preventDefault();
+        let productId = $(this).data("productid");
+        removeFromCart(productId);
+}); 
+}
+//End load cart
+
+//Redirect to cart
+$(".redirect-to-cart").click(function(event) {
+    event.preventDefault();
+    if (isCartEmpty()) {
+        window.location = "/order/cart-empty";
+    } else {
+        window.location = "/order/cart";
+    }
+});

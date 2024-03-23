@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
-from .models import User, OtpCode, Address
+from .models import User, Address
 
 class UserModelTest(TestCase):
     def setUp(self):
@@ -20,19 +20,6 @@ class UserModelTest(TestCase):
         user = User.objects.create(**self.user_data)
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_admin)
-
-
-class OtpCodeModelTest(TestCase):
-    def setUp(self):
-        self.otp_data = {
-            "phone_number": "1234567890",
-            "code": 1234,
-        }
-
-    def test_create_otp_code(self):
-        otp = OtpCode.objects.create(**self.otp_data)
-        self.assertEqual(otp.phone_number, self.otp_data["phone_number"])
-        self.assertEqual(otp.code, self.otp_data["code"])
 
 
 class AddressModelTest(TestCase):

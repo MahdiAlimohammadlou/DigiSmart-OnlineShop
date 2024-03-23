@@ -32,16 +32,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
 
-class OtpCode(AbstractBaseModel):
-    """Model representing an OTP (One-Time Password) code."""
-
-    phone_number = models.CharField(max_length=11)
-    code = models.PositiveSmallIntegerField()
-
-    def __str__(self):
-        return f"{self.phone_number} - {self.code} - {self.created_at}"
-
-
 class Address(AbstractBaseModel):
     """Model representing a user's address."""
 

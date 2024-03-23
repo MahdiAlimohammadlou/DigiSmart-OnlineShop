@@ -89,6 +89,13 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -136,7 +143,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 #Rdis config
-REDIS_HOST = "redis"
+REDIS_HOST = "localhost"
+REDIS_PORT = 6379
+OTP_REDIS_DB = 0
+CART_REDIS_DB = 1
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -166,3 +177,6 @@ DJOSER = {
         'current_user': 'accounts.serializers.UserSerializer',
     },
 }
+
+#Specify the time zone
+TIME_ZONE = 'Asia/Tehran'

@@ -4,6 +4,7 @@ from .models import Product, ProductImage, Category, Brand
 class BaseDiscountSerializer(serializers.ModelSerializer):
     discount_percentage = serializers.SerializerMethodField()
     discount_amount = serializers.SerializerMethodField()
+    discount_type = serializers.SerializerMethodField()  # اضافه کردن فیلد discount_type
 
     class Meta:
         abstract = True
@@ -19,6 +20,13 @@ class BaseDiscountSerializer(serializers.ModelSerializer):
             discount = obj.discount_set.first()
             return discount.amount if discount.discount_type == 'amount' else None
         return None
+    
+    def get_discount_type(self, obj):  # تعریف تابع برای فیلد discount_type
+        if obj.discount_set.exists():
+            discount = obj.discount_set.first()
+            return discount.discount_type
+        return None
+
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,7 +38,7 @@ class ProductSerializer(BaseDiscountSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'slug', 'description', 'category', 'brand', 'price', 'inventory', 'is_available', 'discount_percentage', 'discount_amount', 'images']
+        fields = ['id', 'title', 'slug', 'description', 'category', 'brand', 'price', 'inventory', 'is_available', 'discount_percentage', 'discount_amount', 'discount_type', 'images']
 
     def get_images(self, obj):
         images_queryset = ProductImage.objects.filter(product=obj)
@@ -41,7 +49,7 @@ class ProductSerializer(BaseDiscountSerializer):
 class CategorySerializer(BaseDiscountSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'title', 'slug', 'image', 'description', 'is_sub', 'is_parent', 'parent', 'discount_percentage', 'discount_amount']
+        fields = ['id', 'title', 'slug', 'image', 'description', 'is_sub', 'is_parent', 'parent', 'discount_percentage', 'discount_amount', 'discount_type']
 
 
 class BrandSerializer(serializers.ModelSerializer):

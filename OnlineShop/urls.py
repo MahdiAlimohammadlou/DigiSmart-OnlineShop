@@ -33,6 +33,7 @@ urlpatterns = [
     #Apps urls
     path('', include('product.urls', namespace = 'product')),
     path('account/', include('accounts.urls', namespace = 'accounts')),
+    path('order/', include('orders.urls', namespace = 'order')),
 ]
 
 if settings.DEBUG :

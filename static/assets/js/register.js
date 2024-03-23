@@ -59,6 +59,7 @@ document.getElementById("re-password-input").addEventListener("change", function
     let inputRePass = $("#re-password-input").val();
     let inputRePassError = $("#re-password-error-message");
     if (inputPass != inputRePass) {
+            REPASS_IS_VALID = false;
             inputRePassError.show();
             inputRePassError.text("رمز عبور ها یکسان نیستند.");
     } else {
