@@ -222,10 +222,8 @@ async function saveCartInfo(newItems) {
     newItems.forEach(newItem => {
         const existingItemIndex = cartItems.findIndex(item => item.id === newItem.id);
         if (existingItemIndex !== -1) {
-            console.log("Hello")
             cartItems[existingItemIndex] = newItem;
         } else {
-            console.log("Byee")
             cartItems.push(newItem);
         }
     });
@@ -312,7 +310,7 @@ function isCartEmpty() {
 }
 
 //Save cart in backend
-window.addEventListener('beforeunload', async function(event) {
+window.addEventListener('unload', async function(event) {
     if (checkAuthentication()) {
         try {
             const cartItems = getCartFromCookie();
@@ -324,5 +322,6 @@ window.addEventListener('beforeunload', async function(event) {
         }
     }
 });
+
 
 //------------Cart section------------
