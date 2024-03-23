@@ -208,7 +208,7 @@ async function getCartFromRedis(username) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        saveCartInfo(data);
+        await saveCartInfo(data);
     } catch (error) {
         console.error('Error:', error);
         throw error; 
@@ -222,8 +222,10 @@ async function saveCartInfo(newItems) {
     newItems.forEach(newItem => {
         const existingItemIndex = cartItems.findIndex(item => item.id === newItem.id);
         if (existingItemIndex !== -1) {
+            console.log("Hello")
             cartItems[existingItemIndex] = newItem;
         } else {
+            console.log("Byee")
             cartItems.push(newItem);
         }
     });

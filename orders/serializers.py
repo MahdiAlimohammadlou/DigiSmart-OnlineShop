@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 class UserCartSerializer(serializers.Serializer):
-    id = serializers.CharField()
+    id = serializers.IntegerField()
     title = serializers.CharField()
     image = serializers.CharField()
     numPrice = serializers.DecimalField(max_digits=10, decimal_places=2)
