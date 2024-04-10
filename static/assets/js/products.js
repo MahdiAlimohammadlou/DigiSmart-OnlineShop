@@ -50,29 +50,64 @@ document.addEventListener('DOMContentLoaded', function() {
             
                 let results = data.results;
                 results.forEach(product => {
+
+                    //manage price and discount
+                    const originalPrice = product.price;
+                    let discountedPrice, discountType;
+                    let discount, discountUsageStatus;
+                    if (product.discount) {
+                        if (product.discount.is_usable) {
+                            discountUsageStatus = true;
+                            discountType = product.discount.discount_type;
+                            switch (discountType) {
+                                case "percentage":
+                                    discount = product.discount.percentage + "%";
+                                    discountedPrice = calculateFinalPrice(originalPrice, product.discount.percentage).stringResult
+                                    break;
+                                
+                                case "amount":
+                                    discount = product.discount.amount.toLocaleString('fa', { maximumFractionDigits: 0 }) + "-"
+                                    discountedPrice = calculateFinalPriceWithAmountDiscount(originalPrice, product.discount.amount).stringResult
+                                    break;
+        
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    //manage price and discount
+
+
                     let productContainer = $("<div>").addClass("col-lg-3 col-md-3 col-xs-12 order-1 d-block mb-3 brand-container");
                 
                     let productBox = $("<section>").addClass("product-box product product-type-simple");
                     let thumb = $("<div>").addClass("thumb");
                     let thumbnailA = $("<a>").attr("href", `/product/?product-id=${product.id}`).addClass("d-block").attr("id", `a-${product.id}`);
                     let title = $("<div>").addClass("title").append($("<a>").attr("href", `/product/?product-id=${product.id}`).text(product.title));
-                    let price = $("<div>").addClass("price").html(`<span class="amount">${parseFloat(product.price).toLocaleString('fa', { maximumFractionDigits: 0 })}<span>تومان</span></span>`);
-                
-                    thumb.append(thumbnailA);
-                    productBox.append(thumb, title, price);
-                
-                    if (product.discount_percentage != null) {
+                    let priceDiv;
+                    if (discountUsageStatus) {
+                        priceDiv = $("<div>").addClass("price").html(`
+                            <span style="color: red; text-decoration: line-through;">${originalPrice}</span><br>
+                            <span class="amount">${discountedPrice}<span> تومان</span></span>
+                            `);
+
                         thumbnailA.html(`
                             <div class="promotion-badge">فروش ویژه</div>
                             <div class="discount-d">
-                                <span>${product.discount_percentage}%</span>
+                                <span>${discount}</span>
                             </div>
                             <img src="${product.images[0].image}">
-                        `);
+                            `);
                     } else {
+                        priceDiv = $("<div>").addClass("price").html(`
+                            <span class="amount">${originalPrice}<span>تومان</span></span>
+                            `);
+
                         thumbnailA.html(`<img src="${product.images[0].image}">`);
                     }
                 
+                    thumb.append(thumbnailA);
+                    productBox.append(thumb, title, priceDiv);
                     productContainer.append(productBox);
                     productsContainer.append(productContainer);
                 });

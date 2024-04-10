@@ -1,4 +1,5 @@
 
+
 $(window).on('load', async function() {
     try {
         const isAuthenticated = await checkAuthentication();
@@ -11,6 +12,11 @@ $(window).on('load', async function() {
     } catch (error) {
         console.error('Error occurred:', error);
     }
+
+    if (typeof checkCartAndRedirect === 'function') {
+        checkCartAndRedirect();
+    }
+
 });
 
 

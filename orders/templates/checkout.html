@@ -26,7 +26,7 @@
                     <div class="header-right">
                         <div class="col-lg-3 pr">
                             <div class="header-logo row text-right">
-                                <a href="#">
+                                <a href="/">
                                     <img src="/static/assets/images/logo.png" alt="دیجی اسمارت">
                                 </a>
                             </div>
@@ -34,8 +34,10 @@
                         <div class="col-lg-9 pl">
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
-                                    <form action="#" class="form-search">
+                                    <form method="post" id="search-form" action="/products-search/" class="form-search">
+                                        {% csrf_token %}
                                         <input type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                                        <input id="search-type" type="hidden" name="search-type" >
                                         <div class="action-btns">
                                             <button class="btn btn-search" type="submit">
                                                 <i class="fa fa-search"></i>
@@ -43,16 +45,11 @@
                                             <div class="search-filter">
                                                 <div class="form-ui">
                                                     <div class="custom-select-ui">
-                                                        <select class="right">
-                                                            <option>همه دسته ها</option>
-                                                            <option>کالای دیجیتال</option>
-                                                            <option>آرایشی بهداشتی</option>
-                                                            <option>ابزاری اداری</option>
-                                                            <option>مد پوشاک</option>
-                                                            <option>خانه آشپز خانه</option>
-                                                            <option>لوازم تحریر و هنر</option>
-                                                            <option>کودک و نوزاد</option>
-                                                          </select>
+                                                        <select id = "search-options" class="right">
+                                                            <option data-type="title">نام محصول</option>
+                                                            <option data-type="category">دسته بندی</option>
+                                                            <option data-type="beand">برند</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,7 +69,7 @@
                                         <span class="icon-account">
                                             <img src="/static/assets/images/man.png" class="avator">
                                         </span>
-                                        {% comment %} <span class="title-account">حساب کاربری</span>
+                                        <!-- <span class="title-account">حساب کاربری</span>
                                         <div class="dropdown-menu">
                                             <ul class="account-uls mb-0">
                                                 <li class="account-item">
@@ -88,7 +85,7 @@
                                                     <a href="#" class="account-link">خروج</a>
                                                 </li>
                                             </ul>
-                                        </div> {% endcomment %}
+                                        </div> --> 
                                     </div>
                                 </div>
                                 </div>
@@ -117,7 +114,7 @@
                                         <div class="widget-shopping-cart">
                                             <div class="widget-shopping-cart-content">
                                                 <ul id="cart-products-ul" class="product-list-widget">
-                                                    {% comment %} <li class="mini-cart-item">
+                                                    <!-- <li class="mini-cart-item">
                                                         <div class="mini-cart-item-content">
                                                             <a href="#" class="mini-cart-item-close">
                                                                 <i class="fa fa-trash"></i>
@@ -156,7 +153,7 @@
                                                                 </span>
                                                             </div>    
                                                         </div>
-                                                    </li> {% endcomment %}
+                                                    </li> -->
                                                 </ul>
                                                 <div class="mini-card-total">
                                                     <strong>قیمت کل : </strong>
@@ -166,7 +163,7 @@
                                                 </div>
                                                 <div class="mini-card-button">
                                                     <a href="" class="view-card redirect-to-cart">مشاهده سبد خرید</a>
-                                                    <a href="checkout.html" class="card-checkout">تسویه حساب</a>
+                                                    <a href="/order/checkout" class="card-checkout">تسویه حساب</a>
                                                 </div>
                                             </div>
                                         </div>    
@@ -177,7 +174,7 @@
                     </div>
                 </nav>
             </div>
-            <!--    responsive-megamenu-mobile---------------->
+            <!--    responsive-megamenu-mobile-------------->
             <nav class="sidebar">
                 <div class="nav-header">
                   <div class="header-cover"></div>
@@ -193,7 +190,7 @@
                 <span class="linee3"></span>
             </div>
           <div class="overlay"></div>
-<!--    responsive-megamenu-mobile----------------->
+<!--    responsive-megamenu-mobile---------------->
         </div>
     </div>
 </header>
@@ -212,113 +209,95 @@
                                 <div class="form-coupon-toggle">
                                     <div class="info">
                                         کد تخفیف دارید؟ 
-                                        <a href="#" class="showcoupon">برای نوشتن کد اینجا کلیک کنید</a>
+                                        <a class="showcoupon">برای نوشتن کد اینجا کلیک کنید</a>
                                     </div>
                                     <div class="checkout-coupon form-coupon">
                                         <p>اگر کد تخفیف دارید، لطفا وارد کنید.</p>
-                                        <form action="#" class="form-coupon">
+                                        <div class="form-coupon">
                                             <div class="form-row">
-                                                <input type="text" name="coupon-code" class="checkout-discount-code" placeholder="کد تخفیف">
+                                                <input id="discount-input" type="text" name="coupon-code" class="checkout-discount-code" placeholder="کد تخفیف">
                                                 <div class="append pl">
-                                                    <button class="btn-append btn btn-primary" type="submit">اعمال تخفیف</button>
+                                                    <button id="apply-discount-btn" class="btn-append btn btn-primary">اعمال تخفیف</button>
                                                 </div>
+                                                <span class="error-message" id="discount-error"></span>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="middle-container">
-                            <form action="#" class="form-checkout">
+                            <div class="form-checkout">
                                 <div class="col2-set" id="customer-details">
                                     <div class="col-12">
                                         <div class="billing-fields mt-4">
                                             <h4>جزئیات صورتحساب</h4>
-                                            <div class="form-checkout-row">
-                                                <div class="validate-required">
-                                                    <label for="name">نام تحویل گیرنده <abbr class="required" title="ضروری" style="color:red;">*</abbr></span></label>
-                                                    <input type="text" id="name" class="input-name-checkout form-control">
-                                                </div>
-
-                                                <div class="validate-required">
-                                                    <label for="phone-number">شماره موبایل <abbr class="required" title="ضروری" style="color:red;">*</abbr></label>
-                                                    <input type="text" id="phone-number" class="input-name-checkout form-control text-left">
-                                                </div>
-                                                
-                                                <div class="validate-required">
-                                                    <label for="post-code">کد پستی <abbr class="required" title="ضروری" style="color:red;">*</abbr></label>
-                                                    <input type="text" id="post-code" class="input-name-checkout form-control" placeholder="کد پستی را بدون خط تیره بنویسید">
-                                                </div>
-
-                                                <div class="validate-required">
-                                                    <label for="Street">خیابان <abbr class="required" title="ضروری" style="color:red;">*</abbr></label>
-                                                    <input type="text" id="post-code" class="input-name-checkout form-control">
-                                                </div>
-                                                
+                                            <div id="addressContainer" class="form-checkout-row">
                                                 <div class="Order-another-shipping-address mt-5">
                                                     <div class="Order-address d-inline-block">
-                                                        <button class="btn btn-block text-right collapsed" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        <button id="another-address-btn" class="btn btn-block text-right collapsed" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                                             <span>سفارش به آدرس دیگری حمل شود؟</span> 
                                                     </button>
                                                     </div>
                                                     <div class="shipping-address">
                                                         <div id="collapseExample" class="collapse">
                                                             <div class="middle-container">
-                                                                <form action="#" class="form-checkout">
+                                                                <div class="form-checkout">
                                                                     <div class="form-checkout-row">
                                                                         <label for="name">نام تحویل گیرنده <abbr class="required" title="ضروری" style="color:red;">*</abbr></span></label>
+                                                                        <span class="error-message"></span>
                                                                         <input type="text" id="name" class="input-name-checkout form-control">
                                                                         <label for="phone-number">شماره موبایل <abbr class="required" title="ضروری" style="color:red;">*</abbr></label>
+                                                                        <span class="error-message"></span>
                                                                         <input type="text" id="phone-number" class="input-name-checkout form-control text-left">
-                                                                        <label for="fixed-number">شماره تلفن ثابت <abbr class="required" title="ضروری" style="color:red;">*</abbr></label>
-                                                                        <input type="text" id="fixed-number" class="input-name-checkout form-control text-left">
                                                                         
                                                                         <div class="form-checkout-valid-row">
                                                                             <label for="province">استان                                     
                                                                                 <abbr class="required" title="ضروری" style="color:red;">*</abbr>
                                                                             </label>
+                                                                            <span class="error-message"></span>
                                                                             <select name="" id="province" class="form-control">
                                                                                 <option value="date-desc" selected="selected">استان مورد نظر خود را انتخاب کنید </option>
-                                                                                <option value="date-asc">تهران</option>
-                                                                                <option value="rate">مشهد</option>
-                                                                                <option value="views">اصفهان</option>
-                                                                                <option value="comments">شیراز</option>
                                                                             </select>
-                                                                            <label for="bld-num">پلاک
-                                                                                <abbr class="required" title="ضروری" style="color:red;">*</abbr>
-                                                                            </label>
-                                                                            <input type="text" id="bld-num" class="input-name-checkout js-input-bld-num form-control">
-                                    
                                                                         </div>
+                        
                                                                         
                                                                         <div class="form-checkout-valid-row">
                                                                             <label for="city">شهر 
                                                                                 <abbr class="required" title="ضروری" style="color:red;">*</abbr></label>
-                                                                            <select name="" id="city" class="form-control">
+                                                                            <span class="error-message" ></span>
+                                                                            <select name="" id="city" class="form-control" disabled>
                                                                                 <option value="date-desc" selected="selected">شهر مورد نظر خود را انتخاب کنید</option>
-                                                                                <option value="date-asc">آشخانه</option>
-                                                                                <option value="rate">شیروان</option>
-                                                                                <option value="views">اسفراین</option>
-                                                                                <option value="comments">جاجرم</option>
-                                                                            </select>
-                                                                            <label for="apt-id">واحد</label>
-                                                                            <input type="text" id="apt-id" class="input-name-checkout js-input-apt-id form-control">
+                                                                            </select>                                                    
                                                                         </div>
+                        
+                                                                        
+                                                                        <label for="address">آدرس 
+                                                                        <abbr class="required" title="ضروری" style="color:red;">*</abbr></label>
+                                                                        <span class="error-message" ></span>
+                                                                        <textarea rows="5" cols="30" id="address" class="textarea-name-checkout form-control"></textarea>
+                        
                                                                         
                                                                         <label for="post-code">کد پستی<abbr class="required" title="ضروری" style="color:red;">*</abbr></label>
+                                                                        <span class="error-message" ></span>
                                                                         <input type="text" id="post-code" class="input-name-checkout form-control" placeholder="کد پستی را بدون خط تیره بنویسید">
-                                                                    
+                        
+                                                                        <label for="bld-num">پلاک
+                                                                            <abbr class="required" title="ضروری" style="color:red;">*</abbr>
+                                                                        </label>
+                                                                        <span class="error-message" ></span>
+                                                                        <input type="text" id="bld-num" class="input-name-checkout js-input-bld-num form-control">
+                                                                        
+                                                                        <!-- <div class="AR-CR">
+                                                                            <button class="btn-registrar"> ثبت آدرس</button>
+                                                                        </div> -->
                                                                     </div>
-                                                                </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 
-                                                <label for="address">توضیحات سفارش
-                                                    <span class="optional">(اختیاری)</span>
-                                                </label>
-                                                <textarea rows="5" cols="30" id="address" class="textarea-name-checkout form-control" placeholder="یادداشت ها درباره سفارش شما ، برای مثال نکات مهم برای تحویل بار "></textarea>
                                                 
                                             </div>
                                         </div>
@@ -333,22 +312,22 @@
                                             <th scope="col" class="product-price">قیمت کل</th>
                                           </tr>
                                         </thead>
-                                        <tbody>
-                                          <tr class="checkout-cart-item">
+                                        <tbody id="productTBody">
+                                          <!-- <tr class="checkout-cart-item">
                                             <td class="product-name">تی شرت به رسم طرح دریم کچر کد 558</td>
                                             <td class="product-price text-info">
                                                 <span class="amount">32,000
                                                     <span>تومان</span>
                                                 </span>
                                             </td>
-                                          </tr>
+                                          </tr> -->
                                         </tbody>
                                         <tfoot>
 
                                             <tr class="cart-subtotal">
                                                 <th>مجموع</th>
                                                 <td>
-                                                    <span class="amount">32,000
+                                                    <span class="amount origin-total">32,000
                                                         <span>تومان</span>
                                                     </span>
                                                 </td>
@@ -357,22 +336,22 @@
                                                 <th>حمل ونقل</th>
                                                 <td>
                                                     <div class="shipping-totals-item">
-                                                        <span class="shipping-destination">حمل و نقل به خراسان شمالی</span>
+                                                        <span class="shipping-destination">پست</span>
                                                     </div>
                                                 </td>
                                             </tr>
                                     
-                                            <tr class="cart-discount">
+                                            <tr id="discount-row" class="cart-discount" >
                                             <th>تخفیف شما از این خرید</th>
                                             <td data-title=" تخفیف شما از این خرید ">
                                                 <div class="price">
                                                     <del>
-                                                        <span>32,000
+                                                        <span class="origin-total">32,000
                                                             <span>تومان</span>
                                                         </span>
                                                     </del>
                                                     <ins>
-                                                        <span class="amount">25,000
+                                                        <span id="discount-total" class="amount">25,000
                                                             <span>تومان</span>
                                                         </span>
                                                     </ins>
@@ -388,16 +367,16 @@
                                                 <span class="outline-radio-check"></span>
                                             </label>
                                             <label for="#" class="shipping-totals-title-row">
-                                                <div class="shipping-totals-title">افزایش اعتبار و پرداخت از کیف پول</div>
+                                                <div class="shipping-totals-title">پرداخت اینترنتی هوشمند</div>
                                             </label>
                                         </li>
-                                        <li class="checkout-payment-method-item d-block">
+                                        <!--<li class="checkout-payment-method-item d-block">
                                             <label for="#" class="outline-radio">
-                                                <input type="radio" name="payment_method" id="payment-option-online">
+                                                <input type="radio" name="payment_method" id="payment-option-online" checked>
                                                 <span class="outline-radio-check"></span>
                                             </label>
                                             <label for="#" class="shipping-totals-title-row">
-                                                <div class="shipping-totals-title">پرداخت اینترنتی هوشمند</div>
+                                                <div class="shipping-totals-title">افزایش اعتبار و پرداخت از کیف پول</div>
                                             </label>
                                         </li>
                                         <li class="checkout-payment-method-item d-block">
@@ -408,18 +387,18 @@
                                             <label for="#" class="shipping-totals-title-row">
                                                 <div class="shipping-totals-title">پرداخت هنگام دریافت</div>
                                             </label>
-                                        </li>
+                                        </li>-->
                                     </ul>
-                                    <div class="form-auth-row">
+                                    <!-- <div class="form-auth-row">
                                         <label for="#" class="ui-checkbox mt-1">
                                             <input type="checkbox" value="1" name="login" id="remember">
                                             <span class="ui-checkbox-check"></span>
                                         </label>
                                         <label for="remember" class="remember-me mr-0"><a href="#">حریم خصوصی</a> و <a href="#">شرایط قوانین </a>استفاده از سرویس های سایت دیجی‌اسمارت را مطالعه نموده و با کلیه موارد آن موافقم <abbr class="required" title="ضروری" style="color:red;">*</abbr></label>
-                                    </div>
-                                    <button class="btn-Order btn btn-primary mt-4 mb-3" type="submit">ثبت سفارش</button>
+                                    </div> -->
+                                    <button id="register-order-btn" class="btn-Order btn btn-primary mt-4 mb-3" >ثبت سفارش</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -636,19 +615,19 @@
     </section>
 </footer>
 <!-- footer------------------------------------------->                        
-<!-- scroll_Progress------------------------->
+<!-- scroll_Progress------------------------>
 <div class="progress-wrap">
     <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
         <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
     </svg>
 </div>
-<!-- scroll_Progress------------------------->
+<!-- scroll_Progress------------------------>
 
 </body>
 <!-- file js---------------------------------------------------->
 <script src="/static/assets/js/vendor/jquery-3.2.1.min.js"></script>
 <script src="/static/assets/js/vendor/bootstrap.js"></script>
-<!-- plugin----------------------------------------------------->
+<!-- plugin---------------------------------------------------->
 <script src="/static/assets/js/vendor/owl.carousel.min.js"></script>
 <script src="/static/assets/js/vendor/jquery.countdown.js"></script>
 <script src="/static/assets/js/vendor/ResizeSensor.min.js"></script>
@@ -660,4 +639,7 @@
 <script src="/static/assets/js/utils.js"></script>
 <script src="/static/assets/js/main.js"></script>
 <script src="/static/assets/js/common.js"></script>
+<script src="/static/assets/js/address.js"></script>
+<script src="/static/assets/js/discount_code_manager.js"></script>
+<script src="/static/assets/js/checkout.js"></script>
 </html>

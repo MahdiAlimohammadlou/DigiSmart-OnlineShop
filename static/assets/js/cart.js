@@ -31,7 +31,7 @@ function updateCartPageFront() {
                 <td class="product-cart-quantity">
                     <div class="required-number before">
                         <div class="quantity">
-                            <input id="quantity" type="number" min="1" max="${product.inventory}" step="1" value="${product.quantity}" onchange="updateQuantity(${product.id})">
+                            <input id="${product.id}" type="number" min="1" max="${product.inventory}" step="1" value="${product.quantity}" onchange="updateQuantity(this)">
                         </div>
                     </div>
                 </td>
@@ -70,14 +70,15 @@ function updateCartPageFront() {
 }
 //End load cart
 
-
-
-function updateQuantity(id) {
-    let quantity = parseInt($("#quantity").val());
-    let selectedProduct = selectProductById(id);
+function updateQuantity(quantityInput) {
+    console.log("kjshduahs")
+    let quantity = parseFloat($(quantityInput).val());
+    let selectedProduct = selectProductById(parseInt(quantityInput.id));
     selectedProduct.quantity = quantity;
     selectedProduct.totalPrice = selectedProduct.numPrice * quantity;
+    console.log(selectedProduct)
     saveCartInfo([selectedProduct,]);
+    updateBackendCart();
     updateCartPageFront();
     updateCartFront();
 }

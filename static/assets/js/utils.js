@@ -1,7 +1,7 @@
 //-----Ammount section-------
 
-function calculateFinalPrice(productPrice, discountPercentage) {
-    const discountedPrice = productPrice * (1 - (discountPercentage / 100));
+function calculateFinalPrice(Price, discountPercentage) {
+    const discountedPrice = Price * (1 - (discountPercentage / 100));
     let result = {
         numResult : discountedPrice,
         stringResult : parseFloat(discountedPrice).toLocaleString('fa', { maximumFractionDigits: 0 })
@@ -9,8 +9,8 @@ function calculateFinalPrice(productPrice, discountPercentage) {
     return result
 }
 
-function calculateFinalPriceWithAmountDiscount(productPrice, discountAmount) {
-    const discountedPrice = productPrice - discountAmount;
+function calculateFinalPriceWithAmountDiscount(Price, discountAmount) {
+    const discountedPrice = Price - discountAmount;
     let result = {
         numResult : discountedPrice,
         stringResult : parseFloat(discountedPrice).toLocaleString('fa', { maximumFractionDigits: 0 })
@@ -62,7 +62,6 @@ function redirectToLogin() {
     localStorage.setItem("privies_page", priviesPage);
     window.location = "/account/login/";
 }
-
 
 //Verify Token
 function verifyJWT(token) {
@@ -131,10 +130,10 @@ async function checkAuthentication() {
     let isAuthenticated = false;
 
     if (accessToken) {
-        if (verifyJWT(accessToken)) {
+        if (await verifyJWT(accessToken)) {
             isAuthenticated = true;
         } else if (refreshToken) {
-            if (verifyJWT(refreshToken)) {
+            if (await verifyJWT(refreshToken)) {
                 const newAccess = await refreshJWT(refreshToken);
                 if (newAccess) {
                     localStorage.setItem("access", newAccess);
@@ -143,7 +142,7 @@ async function checkAuthentication() {
             }
         }
     } else if (refreshToken) {
-        if (verifyJWT(refreshToken)) {
+        if (await verifyJWT(refreshToken)) {
             const newAccess = await refreshJWT(refreshToken);
             if (newAccess) {
                 localStorage.setItem("access", newAccess);
@@ -215,6 +214,7 @@ async function getCartFromRedis(username) {
     }
 }
 
+
 // Save the cart to a cookie
 async function saveCartInfo(newItems) {
     let cartItems = JSON.parse(getCookie('cart')) || [];
@@ -233,16 +233,24 @@ async function saveCartInfo(newItems) {
     setCookie('cart', jsonUpdatedItemsArray, 30);
 }
 
+//Update cart in backend
+async function updateBackendCart() {
+    if (await checkAuthentication()) {
+    try {
+        const cartItems = getCartFromCookie();
+        const token = localStorage.getItem("access");
+        const userInfo = await getUserProfile(token);
+        await addCartToRedis(userInfo.phone_number, JSON.stringify(cartItems));
+    } catch (error) {
+        console.error('Error saving cart to Redis:', error);
+    }
+    }
+}
+
+
 
 // Retrieve the cart from a cookie
 function getCartFromCookie() {
-    checkAuthentication().then(isAuthenticated => {
-        if (isAuthenticated) {
-            let token = localStorage.getItem("access");
-            getUserProfile(token).then(userInfo => {
-            });
-        }    
-    });
     const jsonCart = getCookie('cart');
     const cartItems = JSON.parse(jsonCart);
     return cartItems;
@@ -294,13 +302,17 @@ function removeFromCart(productId) {
         if (window.location.pathname == "/order/cart/") {
             updateCartPageFront()
         }
+        if (window.location.pathname == "/order/checkout/") {
+            window.location.reload();
+        }
+        updateBackendCart();
     }
 }
 
 // Clear the cart in the cookie
 function clearCartInCookie() {
-    setCookie('cart', '', -1); // Set expiration date to past to clear the cookie
-    updateCartFront(); // Update the cart view in the front end
+    setCookie('cart', '[]'); 
+    updateCartFront(); 
 }
 
 // Check if cart is empty
@@ -309,19 +321,41 @@ function isCartEmpty() {
     return cartItems.length === 0;
 }
 
-//Save cart in backend
-window.addEventListener('unload', async function(event) {
-    if (checkAuthentication()) {
-        try {
-            const cartItems = getCartFromCookie();
-            const token = localStorage.getItem("access");
-            const userInfo = await getUserProfile(token);
-            await addCartToRedis(userInfo.phone_number, JSON.stringify(cartItems));
-        } catch (error) {
-            console.error('Error saving cart to Redis:', error);
-        }
-    }
-});
-
-
 //------------Cart section------------
+
+//fetch with authentication
+async function fetchData(endpoint, method, data = null) {
+    const requestOptions = {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'JWT ' + localStorage.getItem('access')
+      }
+    };
+  
+    if (data) {
+      requestOptions.body = JSON.stringify(data);
+    }
+  
+    try {
+      const response = await fetch(endpoint, requestOptions);
+  
+      if (method.toUpperCase() === 'DELETE') {
+        if (!response.ok) {
+          throw new Error('Something went wrong!');
+        }
+        return { message: 'Delete successful' };
+      }
+  
+      const responseData = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(responseData.detail || 'Something went wrong!');
+      }
+      
+      return responseData;
+    } catch (error) {
+      console.error('Error:', error.message);
+      throw error;
+    }
+  }

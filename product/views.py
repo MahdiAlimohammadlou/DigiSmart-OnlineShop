@@ -1,15 +1,16 @@
 from django.shortcuts import render
 from django.views import View
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, redirect
-from .models import Product, Category, Brand
-from .serializers import ProductSerializer, CategorySerializer, BrandSerializer
+from .models import Product, Category, Brand, DiscountCode
+from .serializers import ProductSerializer, CategorySerializer, BrandSerializer, DiscountCodeSerializer
 from django.db.models import Q
 from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import APIView
 
 
 # Create your views here.
@@ -42,7 +43,7 @@ class ProductPagination(PageNumberPagination):
 
 class ProductViewSet(viewsets.ViewSet):
     def list(self, request):
-        queryset = Product.objects.all()
+        queryset = Product.soft_objects.filter(inventory__gte=1)
 
         title = request.query_params.get('title', None)
         if title:
@@ -62,7 +63,7 @@ class ProductViewSet(viewsets.ViewSet):
         return paginator.get_paginated_response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = Product.objects.all()
+        queryset = Product.soft_objects.filter(inventory__gte=1)
         product = get_object_or_404(queryset, pk=pk)
         serializer = ProductSerializer(product)
         return Response(serializer.data)
@@ -70,7 +71,7 @@ class ProductViewSet(viewsets.ViewSet):
 
 class CategoryViewSet(viewsets.ViewSet):
     def list(self, request):
-        queryset = Category.objects.all()
+        queryset = Category.soft_objects.all()
 
         # Filter categories based on title, if provided in query parameters
         title = request.query_params.get('title', None)
@@ -81,21 +82,43 @@ class CategoryViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = Category.objects.all()
+        queryset = Category.soft_objects.all()
         category = get_object_or_404(queryset, pk=pk)
         serializer = CategorySerializer(category)
         return Response(serializer.data)
 
 class BrandViewSet(viewsets.ViewSet):
     def list(self, request):
-        queryset = Brand.objects.all()
+        queryset = Brand.soft_objects.all()
         serializer = BrandSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        queryset = Brand.objects.all()
+        queryset = Brand.soft_objects.all()
         brand = get_object_or_404(queryset, pk=pk)
         serializer = BrandSerializer(brand)
         return Response(serializer.data)
+
+
+
+class DiscountCodeAPIView(APIView):
+    def delete(self, request, format=None):
+        code = request.data.get('code')
+        try:
+            discount_code = DiscountCode.objects.get(code=code)
+            discount_code.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except DiscountCode.DoesNotExist:
+            return Response({"error": "Discount code not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    def post(self, request, format=None):
+        code = request.data.get('code')
+        try:
+            discount_code = DiscountCode.objects.get(code=code)
+            serializer = DiscountCodeSerializer(discount_code)
+            return Response(serializer.data)
+        except DiscountCode.DoesNotExist:
+            return Response({"error": "Discount code not found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 

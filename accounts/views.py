@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.views import View
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, redirect
-from .models import User
+from .models import User, Address
 from rest_framework.decorators import api_view
 from rest_framework import status
 import requests
@@ -15,6 +15,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import HttpResponseServerError, HttpResponseBadRequest
 from melipayamak import Api
 from django.conf import settings
+from django.utils import timezone
+from core.views import BaseViewSet
+from .serializers import AddressSerializer
 
 
 def send_sms(to, opt):
@@ -58,6 +61,8 @@ def verify_otp(request):
             is_new_user = False
             if selected_user.is_active == False:
                 selected_user.is_active = True
+                selected_user.registration_time = timezone.now()
+
                 selected_user.save()
                 is_new_user = True
 
@@ -81,7 +86,11 @@ def check_user_existence(request, phone_number):
         return Response({'exists': False}, status=status.HTTP_200_OK)
 
 
-# Create your views here.
+class AddressViewSet(BaseViewSet):
+    model = Address
+    serializer_class = AddressSerializer
+
+
 #render views
 
 class VerifyView(View):
@@ -107,6 +116,16 @@ class OtpLoginView(View):
 class WelcomeView(View):
     def get(self, request):
         return render(request, 'welcome.html')
+
+
+class AddressView(View):
+    def get(self, request):
+        return render(request, 'profile-address.html')
+
+
+class AddressEditView(View):
+    def get(self, request):
+        return render(request, 'profile-address-edit.html')
 
 # class PasView(View):
 #     def post(self, request):

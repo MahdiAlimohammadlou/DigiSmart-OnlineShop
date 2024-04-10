@@ -26,7 +26,7 @@
                     <div class="header-right">
                         <div class="col-lg-3 pr">
                             <div class="header-logo row text-right">
-                                <a href="#">
+                                <a href="/">
                                     <img src="/static/assets/images/logo.png" alt="دیجی اسمارت">
                                 </a>
                             </div>
@@ -163,7 +163,7 @@
                                                 </div>
                                                 <div class="mini-card-button">
                                                     <a href="" class="view-card redirect-to-cart">مشاهده سبد خرید</a>
-                                                    <a href="checkout.html" class="card-checkout">تسویه حساب</a>
+                                                    <a href="/order/checkout" class="card-checkout">تسویه حساب</a>
                                                 </div>
                                             </div>
                                         </div>    
@@ -205,7 +205,7 @@
                 <i class="mdi mdi-home"></i>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                        <li class="breadcrumb-item"><a href="/">خانه</a></li>
                         <li class="breadcrumb-item active" aria-current="page">سبد خرید</li>
                     </ol>
                 </nav>
@@ -302,23 +302,23 @@
                                             <span class="amount"> مجموع</span>
                                             <span id="total-cart"> 6,032,000 تومان</span>
                                         </li>
-                                        {% comment %} <li class="discount-code">
+                                        <li class="discount-code">
                                             <div class=" align-items-center">
-                                                <div class="col-md-7 pr mt-5">
+                                                <!-- <div class="col-md-7 pr mt-5">
                                                     <div class="coupon">
                                                         <form action="#">
                                                             <input type="text" name="input-coupon" class="input-coupon-code" placeholder="كد تخفیف:">
                                                             <button class="btn btn-coupon" type="submit">اعمال</button>
                                                         </form>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-2 pl mt-5">
+                                                </div> -->
+                                                <div class="col-md pl mt-5">
                                                     <div class="proceed-to-checkout">
-                                                        <a href="#" class="checkout-button d-block">تسویه حساب</a>
+                                                        <a href="/order/checkout" class="checkout-button d-block">تسویه حساب</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </li> {% endcomment %}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

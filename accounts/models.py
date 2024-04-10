@@ -13,6 +13,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(max_length=100, null = True, blank = True)
     is_active = models.BooleanField(default = False)
     is_admin = models.BooleanField(default=False)
+    registration_time = models.DateTimeField(null = True, blank = True)
 
     objects = UserManager()
 
@@ -36,6 +37,8 @@ class Address(AbstractBaseModel):
     """Model representing a user's address."""
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipient = models.CharField(max_length = 50)
+    phone_number = models.CharField(max_length=11)
     state = models.CharField(max_length = 50)
     city = models.CharField(max_length = 50)
     plate = models.PositiveSmallIntegerField()

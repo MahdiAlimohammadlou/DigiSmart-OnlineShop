@@ -89,7 +89,7 @@ function setupQuantitySpinner() {
 //Variables
 var productId, productTitle,
      productPrice, productImages,
-     finalPrice;
+     strPrice;
 
 
 document.addEventListener('DOMContentLoaded', async function() {
@@ -111,13 +111,21 @@ document.addEventListener('DOMContentLoaded', async function() {
             setupQuantitySpinner();
             productId = product.id; productTitle = product.title;
             productPrice = product.price; productImages = product.images;
-            let discountType = product.discount_type;
-            if (discountType == "percentage") {
-                finalPrice = calculateFinalPrice(productPrice, product.discount_percentage);
-            } else {finalPrice = calculateFinalPriceWithAmountDiscount(productPrice, product.discount_amount)}
+            strPrice = productPrice.toLocaleString('fa', { maximumFractionDigits: 0 })
+            if (product.discount) {
+                if (product.discount.is_usable) {
+                    let discountType = product.discount.discount_type;
+                    if (discountType == "percentage") {
+                        productPrice = calculateFinalPrice(productPrice, product.discount.percentage);
+                    } else {productPrice = calculateFinalPriceWithAmountDiscount(productPrice, product.discount.amount)}
+                    strPrice = productPrice.stringResult;
+                    productPrice = productPrice.numResult
+                }
+            }
+            
             document.querySelector("#product-title").textContent = productTitle;
             $("#product-price").html(
-                `${finalPrice.stringResult}
+                `${productPrice}
                 <span>تومان</span>`
                 );
             document.getElementById("img-product-zoom").src = productImages[0].image;
@@ -154,11 +162,12 @@ $("#addCart").on("click", function (event) {
         id : productId,
         title : productTitle,
         image : productImages[0].image,
-        numPrice : finalPrice.numResult,
-        strPrice : finalPrice.stringResult,
+        numPrice : productPrice,
+        strPrice : strPrice,
         quantity : quantity,
-        totalPrice : finalPrice.numResult * quantity  
+        totalPrice : productPrice * quantity  
     };
     saveCartInfo([product,]);
+    updateBackendCart();
     updateCartFront();
 });

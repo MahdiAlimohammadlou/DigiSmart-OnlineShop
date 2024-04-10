@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-29(s(be=5!qhshi^icu$a^^cy-%so9vhu3h-y)zg0&2omviec5'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -121,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -130,7 +133,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-import os
 
 STATIC_URL = 'static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static2')
@@ -143,10 +145,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 #Rdis config
-REDIS_HOST = "localhost"
-REDIS_PORT = 6379
-OTP_REDIS_DB = 0
-CART_REDIS_DB = 1
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = os.getenv("REDIS_PORT")
+OTP_REDIS_DB = os.getenv("OTP_REDIS_DB")
+CART_REDIS_DB = os.getenv("CART_REDIS_DB")
 
 
 # Default primary key field type
@@ -178,5 +180,5 @@ DJOSER = {
     },
 }
 
-#Specify the time zone
-TIME_ZONE = 'Asia/Tehran'
+#Zarinpal config
+MERCHANT = os.getenv("MERCHANT")

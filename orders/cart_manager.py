@@ -22,3 +22,7 @@ class CartManager:
             return result_list
         else:
             return None
+    
+    def delete_cart(self, username):
+        # Delete user's cart
+        self.redis_client.delete(username)

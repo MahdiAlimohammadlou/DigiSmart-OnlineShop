@@ -26,7 +26,7 @@
                     <div class="header-right">
                         <div class="col-lg-3 pr">
                             <div class="header-logo row text-right">
-                                <a href="#">
+                                <a href="/">
                                     <img src="/static/assets/images/logo.png" alt="دیجی اسمارت">
                                 </a>
                             </div>
@@ -34,8 +34,10 @@
                         <div class="col-lg-9 pl">
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
-                                    <form action="#" class="form-search">
+                                    <form method="post" id="search-form" action="/products-search/" class="form-search">
+                                        {% csrf_token %}
                                         <input type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                                        <input id="search-type" type="hidden" name="search-type" >
                                         <div class="action-btns">
                                             <button class="btn btn-search" type="submit">
                                                 <i class="fa fa-search"></i>
@@ -43,16 +45,11 @@
                                             <div class="search-filter">
                                                 <div class="form-ui">
                                                     <div class="custom-select-ui">
-                                                        <select class="right">
-                                                            <option>همه دسته ها</option>
-                                                            <option>کالای دیجیتال</option>
-                                                            <option>آرایشی بهداشتی</option>
-                                                            <option>ابزاری اداری</option>
-                                                            <option>مد پوشاک</option>
-                                                            <option>خانه آشپز خانه</option>
-                                                            <option>لوازم تحریر و هنر</option>
-                                                            <option>کودک و نوزاد</option>
-                                                          </select>
+                                                        <select id = "search-options" class="right">
+                                                            <option data-type="title">نام محصول</option>
+                                                            <option data-type="category">دسته بندی</option>
+                                                            <option data-type="beand">برند</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -166,7 +163,7 @@
                                                 </div>
                                                 <div class="mini-card-button">
                                                     <a href="" class="view-card redirect-to-cart">مشاهده سبد خرید</a>
-                                                    <a href="checkout.html" class="card-checkout">تسویه حساب</a>
+                                                    <a href="/order/checkout" class="card-checkout">تسویه حساب</a>
                                                 </div>
                                             </div>
                                         </div>    
@@ -457,6 +454,6 @@
 <!-- main js---------------------------------------------------->
 <script src="/static/assets/js/main.js"></script>
 <script src="/static/assets/js/utils.js"></script>
-<script src="/static/assets/js/common.js"></script>
 <script src="/static/assets/js/cart-empty.js"></script>
+<script src="/static/assets/js/common.js"></script>
 </html>
