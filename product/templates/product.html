@@ -35,12 +35,11 @@
                         <div class="col-lg-9 pl">
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
-                                    <form method="post" id="search-form" action="/products-search/" class="form-search">
-                                        {% csrf_token %}
-                                        <input type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                                    <div class="form-search">
+                                        <input id="search" type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
                                         <input id="search-type" type="hidden" name="search-type" >
                                         <div class="action-btns">
-                                            <button class="btn btn-search" type="submit">
+                                            <button class="btn btn-search">
                                                 <i class="fa fa-search"></i>
                                             </button>
                                             <div class="search-filter">
@@ -55,7 +54,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +69,7 @@
                                         <span class="icon-account">
                                             <img src="/static/assets/images/man.png" class="avator">
                                         </span>
-                                        {% comment %} <span class="title-account">حساب کاربری</span>
+                                        <!--  <span class="title-account">حساب کاربری</span>
                                         <div class="dropdown-menu">
                                             <ul class="account-uls mb-0">
                                                 <li class="account-item">
@@ -86,7 +85,7 @@
                                                     <a href="#" class="account-link">خروج</a>
                                                 </li>
                                             </ul>
-                                        </div> {% endcomment %}
+                                        </div> -->
                                     </div>
                                 </div>
                                 </div>
@@ -115,7 +114,7 @@
                                         <div class="widget-shopping-cart">
                                             <div class="widget-shopping-cart-content">
                                                 <ul id="cart-products-ul" class="product-list-widget">
-                                                    {% comment %} <li class="mini-cart-item">
+                                                    <!-- <li class="mini-cart-item">
                                                         <div class="mini-cart-item-content">
                                                             <a href="#" class="mini-cart-item-close">
                                                                 <i class="fa fa-trash"></i>
@@ -154,7 +153,7 @@
                                                                 </span>
                                                             </div>    
                                                         </div>
-                                                    </li> {% endcomment %}
+                                                    </li> -->
                                                 </ul>
                                                 <div class="mini-card-total">
                                                     <strong>قیمت کل : </strong>
@@ -209,7 +208,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">خانه</a></li>
                             <li class="breadcrumb-item"><a href="#">محصولات</a></li>
-                            {% comment %} <li class="breadcrumb-item"><a href="#"></a></li> {% endcomment %}
+                            <!--  <li class="breadcrumb-item"><a href="#"></a></li> -->
                             <li class="breadcrumb-item active" aria-current="page">محصول</li>
                         </ol>
                     </nav>
@@ -219,7 +218,7 @@
                         <div class="col-lg-5 col-xs-12 pr d-block" style="padding: 0;">
                             <section class="product-gallery">
                                 <div class="gallery">
-                                    {% comment %} <div class="gallery-item">
+                                    <!-- <div class="gallery-item">
                                         <div>
                                             <ul class="gallery-actions">
                                                 <li>
@@ -233,7 +232,7 @@
                                                         <i class="mdi mdi-share"></i>
                                                         <span>اشتراک</span>
                                                     </a>
-                                                    <!-- Modal-option-social -->
+                                                --><!-- Modal-option-social --><!--
                                                     <div class="modal fade" id="option-social" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
@@ -281,7 +280,7 @@
                                                         <i class="mdi mdi-bell-outline"></i>
                                                         <span>اطلاع‌رسانی</span>
                                                     </a>
-                                                    <!-- Modal-option-alarm -->
+                                                    --><!-- Modal-option-alarm --><!--
                                                     <div class="modal fade" id="btn-option-alarm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -371,7 +370,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div> {% endcomment %}
+                                    </div> -->
                                     <div class="gallery-item">
                                         <div class="gallery-img">
                                             <a href="#">
@@ -380,7 +379,7 @@
                                                 <div id="gallery_01f" style="width:420px;float:right;">
                                             </a>
                                                 <ul class="gallery-items owl-carousel owl-theme" id="gallery-slider">
-                                                    {% comment %} <li class="item">
+                                                    <!-- <li class="item">
                                                         <a href="#" class="elevatezoom-gallery active" data-update=""
                                                         data-image="/static/assets/images/page-single-product/product-img/product-img-note10-big-1.jpg"
                                                         data-zoom-image="/static/assets/images/page-single-product/product-img/product-img-note10-big-1.jpg">
@@ -411,7 +410,7 @@
                                                         data-zoom-image="/static/assets/images/page-single-product/product-img/product-img-note10-big-5.jpg">
                                                             <img src="/static/assets/images/page-single-product/product-img/product-img-note10-big-5.jpg" width="100" />
                                                         </a>
-                                                    </li> {% endcomment %}
+                                                    </li> -->
                                                 </ul>
                                             </div>
                                         </div>
@@ -424,12 +423,12 @@
                                 <div class="product-headline">
                                     <h1 id="product-title" class="product-title">
                                     </h1>
-                                    {% comment %} <div class="product-guaranteed text-success">
+                                    <!-- <div class="product-guaranteed text-success">
                                         12
                                         <span>فروش موفق</span>
-                                    </div> {% endcomment %}
+                                    </div> -->
                                 </div>
-                                {% comment %} <div class="product-attributes">
+                                <!-- <div class="product-attributes">
                                     <div class="product-config">
                                         <span class="product-title-en">Samsung Galaxy Note 10 Dual SIM 256GB Mobile Phone</span>
                                         <div class="product-rate">
@@ -440,9 +439,9 @@
                                             <i class="fa fa-star active"></i>
                                         </div>
                                     </div>
-                                </div> {% endcomment %}
+                                </div> -->
                                 <div class="product-config-wrapper">
-                                    {% comment %} <div class="product-directory">
+                                    <!-- <div class="product-directory">
                                         <ul>
                                             <li>
                                                 <span>
@@ -465,8 +464,8 @@
                                                 <a href="#" class="product-link product-tag-title">سامسونگ</a>
                                             </li>
                                         </ul>
-                                    </div> {% endcomment %}
-                                    {% comment %} <div class="col=lg-6 col-md-6 col-xs-12 pr">
+                                    </div> -->
+                                    <!-- <div class="col=lg-6 col-md-6 col-xs-12 pr">
                                         <div class="product-variants">
                                             <span>رنگ بندی: </span>
                                             <ul class="js-product-variants">
@@ -527,18 +526,18 @@
                                                 <a href="#" class="product-price-survery-answer price-no btn btn-secondary">خیر</a>
                                             </div>
                                         </div>
-                                    </div> {% endcomment %}
+                                    </div>  -->
                                     <div class="col=lg-6 col-md-6 col-xs-12 pr">
                                         <div class="product-seller-info">
                                             <div class="seller-info-changable">
-                                                {% comment %} <div class="product-seller-row vendor">
+                                                <!-- <div class="product-seller-row vendor">
                                                     <span class="title"> فروشنده:</span>
                                                     <a href="#" class="product-name">دیجی اسمارت</a>
                                                 </div>
                                                 <div class="product-seller-row guarantee">
                                                     <span class="title"> گارانتی:</span>
                                                     <a href="#" class="product-name">۱۸ ماهه دیجی اسمارت</a>
-                                                </div> {% endcomment %}
+                                                </div>  -->
                                                 <div class="product-seller-row price">
                                                     <span class="title"> قیمت:</span>
                                                     <a href="#" class="product-name">
@@ -610,7 +609,7 @@
                     </div>
                 </div>
             </div>
-            {% comment %} <div class="tabs">
+            <!-- <div class="tabs">
                 <div class="tab-box">
                     <ul class="tab nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
@@ -1280,7 +1279,7 @@
                         </div>
                     </div>
                 </div>
-            </div> {% endcomment %}
+            </div> -->
         </div>
     </div>
 </div>

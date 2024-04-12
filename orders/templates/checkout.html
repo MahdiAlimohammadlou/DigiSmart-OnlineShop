@@ -34,12 +34,11 @@
                         <div class="col-lg-9 pl">
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
-                                    <form method="post" id="search-form" action="/products-search/" class="form-search">
-                                        {% csrf_token %}
-                                        <input type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                                    <div class="form-search">
+                                        <input id="search" type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
                                         <input id="search-type" type="hidden" name="search-type" >
                                         <div class="action-btns">
-                                            <button class="btn btn-search" type="submit">
+                                            <button class="btn btn-search">
                                                 <i class="fa fa-search"></i>
                                             </button>
                                             <div class="search-filter">
@@ -54,7 +53,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -640,6 +639,6 @@
 <script src="/static/assets/js/main.js"></script>
 <script src="/static/assets/js/common.js"></script>
 <script src="/static/assets/js/address.js"></script>
-<script src="/static/assets/js/discount_code_manager.js"></script>
+<script src="/static/assets/js/discount-code-manager.js"></script>
 <script src="/static/assets/js/checkout.js"></script>
 </html>

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Order, Transaction, OrderItem
+from product.models import Product
 
 class UserCartSerializer(serializers.Serializer):
     id = serializers.IntegerField()
@@ -10,13 +11,22 @@ class UserCartSerializer(serializers.Serializer):
     quantity = serializers.IntegerField()
     totalPrice = serializers.DecimalField(max_digits=13, decimal_places=2)
 
+
 class OrderItemSerializer(serializers.ModelSerializer):
+
+    product_title = serializers.SerializerMethodField()
+
     class Meta:
         model = OrderItem
         fields = [
             "id", "order", "product",
-            "quantity", "total_price"
+            "quantity", "total_price", "product_title"
         ] 
+
+    def get_product_title(self, obj):
+        product = obj.product
+        return product.title
+
 
 class OrderSerializer(serializers.ModelSerializer):
     order_items = serializers.SerializerMethodField()

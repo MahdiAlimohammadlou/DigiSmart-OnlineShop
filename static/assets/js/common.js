@@ -1,5 +1,5 @@
 
-
+//Start cart section
 $(window).on('load', async function() {
     try {
         const isAuthenticated = await checkAuthentication();
@@ -18,10 +18,43 @@ $(window).on('load', async function() {
     }
 
 });
+//End cart section
+
+//Start search section
+$('.btn-search').click(function() {
+    let searchInputValue = $('#search').val();
+    let searchTypeValue = $('#search-type').val();
+    searchProducts(searchInputValue, searchTypeValue);
+});
+
+function searchProducts(searchInput, searchType) {
+    fetch('/products-search/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            'search-input': searchInput,
+            'search-type': searchType
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        window.location.href = data.redirect_url;
+    })
+    .catch(error => {
+        console.error('There was a problem with your fetch operation:', error);
+    });
+}
+//End search section
 
 
 //Start account section
-
 checkAuthentication().then(isAuthenticated => {
     let accountContainer = $("#account-container");
     if (isAuthenticated) {
@@ -40,7 +73,7 @@ checkAuthentication().then(isAuthenticated => {
                         <a href="/account/profile-order/" class="account-link">سفارشات من</a>
                     </li>
                     <li class="account-item">
-                        <a href="#" class="account-link">آدرس ها</a>
+                        <a href="/account/profile-address/" class="account-link">آدرس ها</a>
                     </li>
                     <li class="account-item">
                         <a onclick="logout()" class="account-link">خروج</a>

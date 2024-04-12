@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -23,18 +24,23 @@ class ProductsView(View):
     def get(self, request):
         return render(request, 'products.html')
 
-class ProductsSearchView(View):
-    def post(self, request):
-        search_input = request.POST.get("search-input", None)
-        search_type = request.POST.get("search-type", None)
-        if search_input is not None and search_input is not None:
-            return redirect(f"/products/?{search_type}={search_input}")
-
 class ProductView(View):
     def get(self, request):
         return render(request, 'product.html')
 
 #api views
+
+class ProductsSearchAPIView(APIView):
+    def post(self, request):
+        search_input = request.data.get("search-input")
+        search_type = request.data.get("search-type")
+        
+        if search_input is not None and search_type is not None:
+            redirect_url = f"/products/?{search_type}={search_input}"
+            return Response({"redirect_url": redirect_url})
+        else:
+            return Response({"error": "Missing search-input or search-type parameters"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ProductPagination(PageNumberPagination):
     page_size = 10

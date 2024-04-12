@@ -12,16 +12,14 @@ class UserCreateSerializer(BaseUserCreateSerializer):
 
 class UserSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta):
-        fields = ['id', 'phone_number', "email", "full_name"]
+        fields = ['id', 'phone_number', "email", "full_name", "shamsi_registration_date"]
 
 class AddressSerializer(ModelSerializer):
     class Meta:
         model = Address
         fields = [
-            "id", "user", "recipient",
-            "phone_number", "state",
-            "city", "plate",
-            "zip_code", "detail_address"
+            "id", "user", "recipient", "phone_number", "state",
+            "city", "plate", "zip_code", "detail_address"
         ]
 
 

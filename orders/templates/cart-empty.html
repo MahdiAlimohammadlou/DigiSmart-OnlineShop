@@ -34,12 +34,11 @@
                         <div class="col-lg-9 pl">
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
-                                    <form method="post" id="search-form" action="/products-search/" class="form-search">
-                                        {% csrf_token %}
-                                        <input type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                                    <div class="form-search">
+                                        <input id="search" type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
                                         <input id="search-type" type="hidden" name="search-type" >
                                         <div class="action-btns">
-                                            <button class="btn btn-search" type="submit">
+                                            <button class="btn btn-search">
                                                 <i class="fa fa-search"></i>
                                             </button>
                                             <div class="search-filter">
@@ -54,7 +53,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +68,7 @@
                                         <span class="icon-account">
                                             <img src="/static/assets/images/man.png" class="avator">
                                         </span>
-                                        {% comment %} <span class="title-account">حساب کاربری</span>
+                                        <!--  <span class="title-account">حساب کاربری</span>
                                         <div class="dropdown-menu">
                                             <ul class="account-uls mb-0">
                                                 <li class="account-item">
@@ -85,8 +84,7 @@
                                                     <a href="#" class="account-link">خروج</a>
                                                 </li>
                                             </ul>
-                                        </div> {% endcomment %}
-                                    </div>
+                                        </div>  -->                                    </div>
                                 </div>
                                 </div>
                             </div>
@@ -114,7 +112,7 @@
                                         <div class="widget-shopping-cart">
                                             <div class="widget-shopping-cart-content">
                                                 <ul id="cart-products-ul" class="product-list-widget">
-                                                    {% comment %} <li class="mini-cart-item">
+                                                    <!--  <li class="mini-cart-item">
                                                         <div class="mini-cart-item-content">
                                                             <a href="#" class="mini-cart-item-close">
                                                                 <i class="fa fa-trash"></i>
@@ -153,8 +151,7 @@
                                                                 </span>
                                                             </div>    
                                                         </div>
-                                                    </li> {% endcomment %}
-                                                </ul>
+                                                    </li>  -->                                                </ul>
                                                 <div class="mini-card-total">
                                                     <strong>قیمت کل : </strong>
                                                     <span class="price-total total"> 25,000,000

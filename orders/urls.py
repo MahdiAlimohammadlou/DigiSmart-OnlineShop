@@ -22,7 +22,7 @@ urlpatterns = [
     path('cart-manager/<str:username>/', CartManagerView.as_view()),
     path('checkout/', CheckoutView.as_view()),
     path('success-checkout/', CheckoutSuccesssView.as_view(), name="success_checkout"),
-    path('faild-checkout/', CheckoutFaildView.as_view(), name = "faild_checkout"),
+    path('faild-checkout/', CheckoutFaildView.as_view(), name="faild_checkout"),
     path('api/', include(router.urls)),
     path('send-to-zarinpal/', SendRequestZarinAPIView.as_view(), name='send_to_zarinpal'),
     path('verify-zarinpal/<int:order_id>', VerifyZarinpalAPIView.as_view(), name='verify_zarinpal'),

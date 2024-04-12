@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
-
+from core.utils import shamsi_date
 from core.models import AbstractBaseModel
 
 # Create your models here.
@@ -19,11 +19,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "phone_number"
 
-    # def has_perm(self, perm, obj = None):
-    #     return True
+    def has_perm(self, perm, obj = None):
+        return True
 
-    # def has_module_perms(self, app_label):
-    #     return True
+    def has_module_perms(self, app_label):
+        return True
 
     def __str__(self):
         return self.phone_number
@@ -31,6 +31,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+
+    @property
+    def shamsi_registration_date(self):
+        return shamsi_date(self.registration_time)
 
 
 class Address(AbstractBaseModel):

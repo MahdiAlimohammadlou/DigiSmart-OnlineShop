@@ -1,15 +1,36 @@
 
-checkAuthentication().then(isAuthenticated => {
-    if (!isAuthenticated) {
-        redirectToLogin();
-    }
-});
-
 if (isCartEmpty()) {
     window.location.href = "/order/cart-empty/"
 }
 
+checkAuthentication().then(isAuthenticated => {
+    if (!isAuthenticated) {
+        redirectToLogin();
+    } else {
+        fetchData("/account/check-user-info/", "GET").then (result => {
+            if (!result.is_complete) {
+                window.location.href = "/account/profile-info/"
+            }
+        })
+    }
+});
+
 $("#discount-row").hide();
+
+// Update address list front
+async function AddressListFront() {
+    addressList = await fetchData('/account/api/address', 'GET');
+    if (!addressList) {
+        window.location.href = "/account/profile-address-edit/"
+    }
+    addressList.forEach(address => {
+        createAddressContainer(address);
+            let firstRadioButton = $('input[name="selectAddress"]:first');
+            selectedAddress = addressList.find(address => address.id == firstRadioButton.val());
+            firstRadioButton.prop('checked', true);
+    });
+}
+
 
 let addressList;
 let selectedAddress;
@@ -51,6 +72,13 @@ function createAddressContainer(addressData) {
     profileStats.click(function() {
         let selectedRadio = $(this).find('input[type="radio"]').prop('checked', true);
         selectedAddress = addressList.find(address => address.id == selectedRadio.val());
+        let toggleBtn = $("#another-address-btn");
+        let ariaExpanded = toggleBtn.attr('aria-expanded');
+        toggleBtn.toggleClass('collapsed');
+        if (ariaExpanded === 'true') {
+            toggleBtn.attr('aria-expanded', 'false');
+        }
+
     });
     profileStats.hover(
         function() {
@@ -81,18 +109,6 @@ function createAddressContainer(addressData) {
     let li4 = $('<li>').appendTo(profileAddressInfo);
     $('<div>').addClass('profile-address-info-item location').html('<i class="mdi mdi-account"></i>' + addressData.recipient).appendTo(li4);
     $("#addressContainer").prepend(profileStats);
-}
-
-
-// Update address list front
-async function AddressListFront() {
-    addressList = await fetchData('/account/api/address', 'GET');
-    addressList.forEach(address => {
-        createAddressContainer(address);
-            let firstRadioButton = $('input[name="selectAddress"]:first');
-            selectedAddress = addressList.find(address => address.id == firstRadioButton.val());
-            firstRadioButton.prop('checked', true);
-    });
 }
 
 //Update factor

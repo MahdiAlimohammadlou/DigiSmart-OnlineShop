@@ -71,12 +71,10 @@ function updateCartPageFront() {
 //End load cart
 
 function updateQuantity(quantityInput) {
-    console.log("kjshduahs")
     let quantity = parseFloat($(quantityInput).val());
     let selectedProduct = selectProductById(parseInt(quantityInput.id));
     selectedProduct.quantity = quantity;
     selectedProduct.totalPrice = selectedProduct.numPrice * quantity;
-    console.log(selectedProduct)
     saveCartInfo([selectedProduct,]);
     updateBackendCart();
     updateCartPageFront();

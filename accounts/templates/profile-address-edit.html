@@ -34,30 +34,26 @@
                         <div class="col-lg-9 pl">
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
-                                    <form action="#" class="form-search">
-                                        <input type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                                    <div class="form-search">
+                                        <input id="search" type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                                        <input id="search-type" type="hidden" name="search-type" >
                                         <div class="action-btns">
-                                            <button class="btn btn-search" type="submit">
+                                            <button class="btn btn-search">
                                                 <i class="fa fa-search"></i>
                                             </button>
                                             <div class="search-filter">
                                                 <div class="form-ui">
                                                     <div class="custom-select-ui">
-                                                        <select class="right">
-                                                            <option>همه دسته ها</option>
-                                                            <option>کالای دیجیتال</option>
-                                                            <option>آرایشی بهداشتی</option>
-                                                            <option>ابزاری اداری</option>
-                                                            <option>مد پوشاک</option>
-                                                            <option>خانه آشپز خانه</option>
-                                                            <option>لوازم تحریر و هنر</option>
-                                                            <option>کودک و نوزاد</option>
-                                                          </select>
+                                                        <select id = "search-options" class="right">
+                                                            <option data-type="title">نام محصول</option>
+                                                            <option data-type="category">دسته بندی</option>
+                                                            <option data-type="beand">برند</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -68,11 +64,11 @@
                         <div class="header-account text-left">
                             <div class="d-block">
                                 <div class="account-box">
-                                    <div class="nav-account d-block pl">
+                                    <div id="account-container" class="nav-account d-block pl">
                                         <span class="icon-account">
                                             <img src="/static/assets/images/man.png" class="avator">
                                         </span>
-                                        <span class="title-account">حساب کاربری</span>
+                                        <!-- <span class="title-account">حساب کاربری</span>
                                         <div class="dropdown-menu">
                                             <ul class="account-uls mb-0">
                                                 <li class="account-item">
@@ -88,7 +84,7 @@
                                                     <a href="#" class="account-link">خروج</a>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -100,23 +96,23 @@
                 <nav class="header-main-nav">
                     <div class="d-block">
                         <div class="align-items-center">
-                            <ul class="menu-ul mega-menu-level-one">
+                            <ul id="cat-ul" class="menu-ul mega-menu-level-one">
                                 <div class="divider-space-card d-block">
                                     <div class="header-cart-basket">
-                                        <a href="#" class="cart-basket-box">
+                                        <a href="" class="cart-basket-box redirect-to-cart">
                                             <span class="icon-cart">
                                                 <i class="mdi mdi-cart"></i>
                                             </span>
                                             <span class="title-cart">سبد خرید</span>
-                                            <span class="price-cart">25,000,000
+                                            <span class="price-cart total">25,000,000
                                                 <span>تومان</span>
                                             </span>
-                                            <span class="count-cart">2</span>
+                                            <span id="cart-products-count" class="count-cart">2</span>
                                         </a>
                                         <div class="widget-shopping-cart">
                                             <div class="widget-shopping-cart-content">
-                                                <ul class="product-list-widget">
-                                                    <li class="mini-cart-item">
+                                                <ul id="cart-products-ul" class="product-list-widget">
+                                                    <!-- <li class="mini-cart-item">
                                                         <div class="mini-cart-item-content">
                                                             <a href="#" class="mini-cart-item-close">
                                                                 <i class="fa fa-trash"></i>
@@ -155,17 +151,17 @@
                                                                 </span>
                                                             </div>    
                                                         </div>
-                                                    </li>
+                                                    </li> -->
                                                 </ul>
                                                 <div class="mini-card-total">
                                                     <strong>قیمت کل : </strong>
-                                                    <span class="price-total"> 25,000,000
+                                                    <span class="price-total total"> 25,000,000
                                                         <span>تومان</span>
                                                     </span>
                                                 </div>
                                                 <div class="mini-card-button">
-                                                    <a href="cart.html" class="view-card">مشاهده سبد خرید</a>
-                                                    <a href="checkout.html" class="card-checkout">تسویه حساب</a>
+                                                    <a href="" class="view-card redirect-to-cart">مشاهده سبد خرید</a>
+                                                    <a href="/order/checkout" class="card-checkout">تسویه حساب</a>
                                                 </div>
                                             </div>
                                         </div>    
@@ -184,108 +180,7 @@
                     <a class="logo-icon" href="#"><img alt="logo-icon" src="/static/assets/images/logo.png" width="40"></a>
                   </div>
                 </div>
-                <ul class="nav-categories ul-base">
-                    <li><a href="#" class="collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"><i class="mdi mdi-chevron-down"></i>کالای دیجیتال</a>
-                       <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
-                            <ul>
-                                <li class="has-sub"><a href="#" class="category-level-2">لوازم جانبی گوشی</a>
-                                    <ul>
-                                        <li><a href="#" class="category-level-3">کیف و کاور گوشی</a></li>
-                                        <li><a href="#" class="category-level-3">پاور بانک(شارژر همراه)</a></li>
-                                        <li><a href="#" class="category-level-3">پایه نگهدارنده گوشی</a></li>
-                                        <li><a href="#" class="category-level-3">همه موارد این دسته</a></li>
-                                    </ul>
-                                </li>
-                                <li class="has-sub"><a href="#" class="category-level-2">گوشی موبایل</a>
-                                    <ul>
-                                        <li><a href="#" class="category-level-3">سامسونگ</a></li>
-                                        <li><a href="#" class="category-level-3">هوآوی</a></li>
-                                        <li><a href="#" class="category-level-3">اپل</a></li>
-                                        <li><a href="#" class="category-level-3">شیائومی</a></li>
-                                        <li><a href="#" class="category-level-3">آنر</a></li>
-                                        <li><a href="#" class="category-level-3">نوکیا</a></li>
-                                        <li><a href="#" class="category-level-3">همه موارد این دسته</a></li>
-                                    </ul>
-                                </li>
-                                <li class="has-sub"><a href="#" class="category-level-2">دوربین</a>
-                                    <ul>
-                                        <li><a href="#" class="category-level-3">دوربین عکاسی دیجیتال</a></li>
-                                        <li><a href="#" class="category-level-3">دوربین ورزشی و فیلم برداری</a></li>
-                                        <li><a href="#" class="category-level-3">دوربین چاپ سریع</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li><a href="#" class="collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="mdi mdi-chevron-down"></i>آرایشی و بهداشتی</a>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample" style="">
-                             <ul>
-                                 <li class="has-sub"><a href="#" class="category-level-2">لوازم جانبی گوشی</a>
-                                     <ul>
-                                         <li><a href="#" class="category-level-3">کیف و کاور گوشی</a></li>
-                                         <li><a href="#" class="category-level-3">پاور بانک(شارژر همراه)</a></li>
-                                         <li><a href="#" class="category-level-3">پایه نگهدارنده گوشی</a></li>
-                                         <li><a href="#" class="category-level-3">همه موارد این دسته</a></li>
-                                     </ul>
-                                 </li>
-                                 <li class="has-sub"><a href="#" class="category-level-2">گوشی موبایل</a>
-                                     <ul>
-                                         <li><a href="#" class="category-level-3">سامسونگ</a></li>
-                                         <li><a href="#" class="category-level-3">هوآوی</a></li>
-                                         <li><a href="#" class="category-level-3">اپل</a></li>
-                                         <li><a href="#" class="category-level-3">شیائومی</a></li>
-                                         <li><a href="#" class="category-level-3">آنر</a></li>
-                                         <li><a href="#" class="category-level-3">نوکیا</a></li>
-                                         <li><a href="#" class="category-level-3">همه موارد این دسته</a></li>
-                                     </ul>
-                                 </li>
-                                 <li class="has-sub"><a href="#" class="category-level-2">دوربین</a>
-                                     <ul>
-                                         <li><a href="#" class="category-level-3">دوربین عکاسی دیجیتال</a></li>
-                                         <li><a href="#" class="category-level-3">دوربین ورزشی و فیلم برداری</a></li>
-                                         <li><a href="#" class="category-level-3">دوربین چاپ سریع</a></li>
-                                     </ul>
-                                 </li>
-                             </ul>
-                         </div>
-                     </li>
-                    <li><a href="#">ابزار و اداری</a></li>
-                    <li><a href="#">مد و پوشاک</a></li>
-                    <li><a href="#" class="collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><i class="mdi mdi-chevron-down"></i>خانه و آشپزخانه</a>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample" style="">
-                             <ul>
-                                 <li class="has-sub"><a href="#" class="category-level-2">لوازم جانبی گوشی</a>
-                                     <ul>
-                                         <li><a href="#" class="category-level-3">کیف و کاور گوشی</a></li>
-                                         <li><a href="#" class="category-level-3">پاور بانک(شارژر همراه)</a></li>
-                                         <li><a href="#" class="category-level-3">پایه نگهدارنده گوشی</a></li>
-                                         <li><a href="#" class="category-level-3">همه موارد این دسته</a></li>
-                                     </ul>
-                                 </li>
-                                 <li class="has-sub"><a href="#" class="category-level-2">گوشی موبایل</a>
-                                     <ul>
-                                         <li><a href="#" class="category-level-3">سامسونگ</a></li>
-                                         <li><a href="#" class="category-level-3">هوآوی</a></li>
-                                         <li><a href="#" class="category-level-3">اپل</a></li>
-                                         <li><a href="#" class="category-level-3">شیائومی</a></li>
-                                         <li><a href="#" class="category-level-3">آنر</a></li>
-                                         <li><a href="#" class="category-level-3">نوکیا</a></li>
-                                         <li><a href="#" class="category-level-3">همه موارد این دسته</a></li>
-                                     </ul>
-                                 </li>
-                                 <li class="has-sub"><a href="#" class="category-level-2">دوربین</a>
-                                     <ul>
-                                         <li><a href="#" class="category-level-3">دوربین عکاسی دیجیتال</a></li>
-                                         <li><a href="#" class="category-level-3">دوربین ورزشی و فیلم برداری</a></li>
-                                         <li><a href="#" class="category-level-3">دوربین چاپ سریع</a></li>
-                                     </ul>
-                                 </li>
-                             </ul>
-                         </div>
-                     </li>
-                     <li><a href="#">لوازم تحریر و هنر</a></li>
-                     <li><a href="#">کودک و نوزاد</a></li>
-                </ul>
+                <ul id="cat-menu" class="nav-categories ul-base"></ul>
             </nav>
             <div class="nav-btn nav-slider">
                 <span class="linee1"></span>
@@ -316,42 +211,32 @@
                                 </header>
                                 <footer class="profile-box-content-footer">
                                     <span class="profile-box-nameuser">حسن شجاعی</span>
-                                    <span class="profile-box-registery-date">عضویت در سایت 2 پیش</span>
+                                    <span class="profile-box-registery-date"></span>
                                     <span class="profile-box-phone">شماره همراه : *******0991</span>
                                     <div class="profile-box-tabs">
-                                        <a href="#" class="profile-box-tab-sign-out"><i class="mdi mdi-logout-variant"></i>خروج از حساب</a>
+                                        <a onclick="logout()" class="profile-box-tab-sign-out"><i class="mdi mdi-logout-variant"></i>خروج از حساب</a>
                                     </div>
                                 </footer>
                             </section>
                             <section class="profile-box">
                                 <ul class="profile-account-navs">
                                     <li class="profile-account-nav-item navigation-link-dashboard">
-                                        <a href="#" class=""><i class="mdi mdi-account-outline"></i>
+                                        <a href="/account/profile/" class=""><i class="mdi mdi-account-outline"></i>
                                             پروفایل
                                         </a>
                                     </li>
                                     <li class="profile-account-nav-item navigation-link-dashboard">
-                                        <a href="#" class=""><i class="mdi mdi-cart"></i>
+                                        <a href="/account/profile-order/" class=""><i class="mdi mdi-cart"></i>
                                             همه سفارش ها
                                         </a>
                                     </li>
                                     <li class="profile-account-nav-item navigation-link-dashboard">
-                                        <a href="#" class=""><i class="mdi mdi-heart"></i>
-                                            لیست علاقه مندی
-                                        </a>
-                                    </li>
-                                    <li class="profile-account-nav-item navigation-link-dashboard">
-                                        <a href="#" class="active"><i class="mdi mdi-map-outline"></i>
+                                        <a href="/account/profile-address/" class="active"><i class="mdi mdi-map-outline"></i>
                                             آدرس ها
                                         </a>
                                     </li>
                                     <li class="profile-account-nav-item navigation-link-dashboard">
-                                        <a href="#" class=""><i class="mdi mdi-email-open-outline"></i>
-                                            نظرات
-                                        </a>
-                                    </li>
-                                    <li class="profile-account-nav-item navigation-link-dashboard">
-                                        <a href="#" class=""><i class="mdi mdi-tooltip-text-outline"></i>
+                                        <a href="/account/profile-info/" class=""><i class="mdi mdi-tooltip-text-outline"></i>
                                             اطلاعات حساب
                                         </a>
                                     </li>

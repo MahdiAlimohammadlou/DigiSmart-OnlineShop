@@ -33,12 +33,11 @@
                             <div class="col-lg-9 pl">
                                 <div class="header-search row text-right">
                                     <div class="header-search-box">
-                                        <form method="post" id="search-form" action="/products-search/" class="form-search">
-                                            {% csrf_token %}
-                                            <input type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                                        <div class="form-search">
+                                            <input id="search" type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
                                             <input id="search-type" type="hidden" name="search-type" >
                                             <div class="action-btns">
-                                                <button class="btn btn-search" type="submit">
+                                                <button class="btn btn-search">
                                                     <i class="fa fa-search"></i>
                                                 </button>
                                                 <div class="search-filter">
@@ -53,7 +52,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +67,7 @@
                                             <span class="icon-account">
                                                 <img src="/static/assets/images/man.png" class="avator">
                                             </span>
-                                            {% comment %} <span class="title-account">حساب کاربری</span>
+                                            <!-- <span class="title-account">حساب کاربری</span>
                                             <div class="dropdown-menu">
                                                 <ul class="account-uls mb-0">
                                                     <li class="account-item">
@@ -84,7 +83,7 @@
                                                         <a href="#" class="account-link">خروج</a>
                                                     </li>
                                                 </ul>
-                                            </div> {% endcomment %}
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +111,7 @@
                                             <div class="widget-shopping-cart">
                                                 <div class="widget-shopping-cart-content">
                                                     <ul id="cart-products-ul" class="product-list-widget">
-                                                        {% comment %} <li class="mini-cart-item">
+                                                        <!-- <li class="mini-cart-item">
                                                             <div class="mini-cart-item-content">
                                                                 <a href="#" class="mini-cart-item-close">
                                                                     <i class="fa fa-trash"></i>
@@ -151,7 +150,7 @@
                                                                     </span>
                                                                 </div>    
                                                             </div>
-                                                        </li> {% endcomment %}
+                                                        </li> -->
                                                     </ul>
                                                     <div class="mini-card-total">
                                                         <strong>قیمت کل : </strong>
@@ -643,7 +642,7 @@
             </div>
         </div>
         <!-- adplacement-------------------------->
-        {% comment %}<div class="container-main">
+        <!-- <div class="container-main">
             <div class="d-block">
                 <div class="adplacement-container-row">
                     <div class="col-12">
@@ -683,13 +682,13 @@
                     </div>
                 </div>
             </div>
-        </div>{% endcomment %}
+        </div> -->
         <!-- adplacement-------------------------->
 
         <!-- slidre-product---------------------->
         <div class="container-main">
             <div class="d-block">
-                {% comment %} <div class="col-lg-9 col-md-9 col-xs-12 pr order-1 d-block">
+                <!-- <div class="col-lg-9 col-md-9 col-xs-12 pr order-1 d-block">
                     <div class="slider-widget-products">
                         <div class="widget widget-product card">
                             <header class="card-header">
@@ -794,7 +793,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- slider-moment------------------------>
+                <!-- slider-moment----------------------->
                 <div class="col-lg-3 col-md-3 col-xs-12 pl order-1 d-block">
                     <div class="slider-moments">
                         <div class="widget-suggestion widget card">
@@ -890,7 +889,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- slider-moment------------------------>
+                <!-- slider-moment----------------------->
                 <div class="col-lg-12 col-md-12 col-xs-12 pr order-1 d-block">
                     <div class="slider-widget-products">
                         <div class="widget widget-product card">
@@ -996,7 +995,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- adplacement-------------------------->
+                <!-- adplacement------------------------->
                 <div class="container-fluid">
                     <div class="row pr">
                         <div class="adplacement-container-row">
@@ -1031,7 +1030,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- adplacement-------------------------->
+                <!-- adplacement------------------------->
                 <div class="col-lg-12 col-md-12 col-xs-12 pr order-1 d-block">
                     <div class="slider-widget-products">
                         <div class="widget widget-product card">
@@ -1241,8 +1240,8 @@
                             </div>
                         </div>
                     </div>
-                </div> {% endcomment %}
-                <!-- brand-------------------------------------->
+                </div> -->
+                <!-- brand---------------------------------->
                 <div class="col-lg-12 col-md-12 col-xs-12 pr order-1 d-block">
                     <div class="slider-widget-products">
                         <div id="x" class="widget widget-product card mb-0">

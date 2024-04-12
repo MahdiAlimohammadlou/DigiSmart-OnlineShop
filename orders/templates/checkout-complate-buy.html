@@ -34,12 +34,11 @@
                         <div class="col-lg-9 pl">
                             <div class="header-search row text-right">
                                 <div class="header-search-box">
-                                    <form method="post" id="search-form" action="/products-search/" class="form-search">
-                                        {% csrf_token %}
-                                        <input type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                                    <div class="form-search">
+                                        <input id="search" type="search" class="header-search-input" name="search-input" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
                                         <input id="search-type" type="hidden" name="search-type" >
                                         <div class="action-btns">
-                                            <button class="btn btn-search" type="submit">
+                                            <button class="btn btn-search">
                                                 <i class="fa fa-search"></i>
                                             </button>
                                             <div class="search-filter">
@@ -54,7 +53,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -205,19 +204,24 @@
                 <div class="checkout woocommerce-checkout">
                     <div class="content-checkout">
                         <div class="middle-container">
-                            <form action="#" class="form-checkout">
+                            <div class="form-checkout">
                                 <div class="col2-set" id="customer-details">
                                     <div class="col-12">
                                         <div class="billing-fields mt-4">
                                             <h4 class="text-success">سفارش دریافت شد</h4>
                                             <p class="thankyou-order-received">پرداخت با موفقیت انجام شد. سفارش شما با موفقیت ثبت شد و در زمان تعیین شده برای شما ارسال خواهد شد.
-                                                از اینکه دیجی استور را برای خرید انتخاب کردید از شما سپاسگزاریم.</p>
+                                                از اینکه دیجی اسمارت
+                                                 را برای خرید انتخاب کردید از شما سپاسگزاریم.</p>
                                             <ul class="order-overview">
-                                                <li class="order-overview-item">
+                                                <li id="order-id" class="order-overview-item">
                                                     کد سفارش :
                                                     <span>DKC-57262900</span>
                                                 </li>
-                                                <li class="order-overview-item">
+                                                <li id="ref-id" class="order-overview-item">
+                                                    کد پیگیری :
+                                                    <span>DKC-57262900</span>
+                                                </li>
+                                                <li id="date" class="order-overview-item">
                                                     تاریخ :
                                                     <span>17 فروردین 1399</span>
                                                 </li>
@@ -225,7 +229,7 @@
                                                     روش پرداخت :
                                                     <span>پرداخت اینترنتی هوشمند</span>
                                                 </li>
-                                                <li class="order-overview-item">
+                                                <li id="total" class="order-overview-item">
                                                     قیمت نهایی :
                                                     <span class="amount">25,000
                                                         <span>تومان</span>
@@ -235,7 +239,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% comment %} <h3 class="order-review-heading">سفارش شما</h3>
+                                <h3 class="order-review-heading">سفارش شما</h3>
                                 <div class="checkout-review-order">
                                     <table class="checkout-review-order-table table table-borderless">
                                         <thead>
@@ -245,14 +249,14 @@
                                           </tr>
                                         </thead>
                                         <tbody>
-                                          <tr class="checkout-cart-item">
+                                          <!-- <tr class="checkout-cart-item">
                                             <td class="product-name">تی شرت به رسم طرح دریم کچر کد 558</td>
                                             <td class="product-price text-info">
                                                 <span class="amount">32,000
                                                     <span>تومان</span>
                                                 </span>
                                             </td>
-                                          </tr>
+                                          </tr> -->
                                         </tbody>
                                         <tfoot>
 
@@ -269,7 +273,7 @@
                                                 <th>حمل ونقل</th>
                                                 <td>
                                                     <div class="shipping-totals-item">
-                                                        <span class="shipping-destination">	تومان 20,000 به وسیله حمل و نقل معمولی</span>
+                                                        <span class="shipping-destination">به وسیله حمل و نقل معمولی</span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -297,25 +301,15 @@
                                     </table>
                                     <div class="profile-address pr-3 pl-3 mt-5">
                                         <div class="box-header">
-                                            <span class="box-title">نشانی ما</span>
+                                            <span class="box-title">نشانی</span>
                                         </div>
                                         <div class="profile-address-item">
-                                            <div class="profile-address-item-top">
-                                                <div class="profile-address-item-title">خراسان شمالی ، بجنورد</div>
-                                            </div>
-    
                                             <div class="profile-address-content">
                                                 <ul class="profile-address-info">
                                                     <li>
                                                         <div class="profile-address-info-item location">
                                                             <i class="mdi mdi-map-outline"></i>
                                                             خراسان شمالی، بجنورد
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="profile-address-info-item location">
-                                                            <i class="mdi mdi-email-outline"></i>
-                                                            945789651235
                                                         </div>
                                                     </li>
                                                     <li>
@@ -334,8 +328,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> {% endcomment %}
-                            </form>
+                                </div> 
+                            </dic>
                         </div>
                     </div>
                 </div>
@@ -564,7 +558,7 @@
 <!-- file js---------------------------------------------------->
 <script src="/static/assets/js/vendor/jquery-3.2.1.min.js"></script>
 <script src="/static/assets/js/vendor/bootstrap.js"></script>
-<!-- plugin----------------------------------------------------->
+<!-- plugin---------------------------------------------------->
 <script src="/static/assets/js/vendor/owl.carousel.min.js"></script>
 <script src="/static/assets/js/vendor/jquery.countdown.js"></script>
 <script src="/static/assets/js/vendor/ResizeSensor.min.js"></script>
@@ -576,4 +570,5 @@
 <script src="/static/assets/js/utils.js"></script>
 <script src="/static/assets/js/main.js"></script>
 <script src="/static/assets/js/common.js"></script>
+<script src="/static/assets/js/payment-result.js"></script>
 </html>

@@ -141,7 +141,7 @@ function updateCities(optionsList) {
   selectElement.empty();
   const defaultOption = $("<option>");
   defaultOption.val("date-desc");
-  defaultOption.text("شهر مورد نظر را انتخاب کنید");
+  defaultOption.text("شهر مورد نظر خود را انتخاب کنید");
   selectElement.append(defaultOption);
   addOptionsToSelect(selectElement, optionsList)
 }

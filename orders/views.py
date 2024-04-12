@@ -130,7 +130,7 @@ class VerifyZarinpalAPIView(APIView):
                 return redirect(f'/order/success-checkout/?ref_id={transaction.ref_id}&order_id={order.id}')
         else:
             process_failure(request, order, transaction)
-            return redirect(f'/order/faild-checkout/?ref_id={transaction.ref_id}&order_id={order.id}')
+            return redirect(f'/order/faild-checkout/?order_id={order.id}')
 
 def process_order(request, order, transaction):
     if "discount_code" in request.session:
@@ -158,7 +158,7 @@ def process_order(request, order, transaction):
     del request.session["transaction_id"]
 
 def process_failure(request, order, transaction):
-    order.order_status = "unsuccessful"
+    order.order_status = "نا موفق"
     order.save()
     transaction.save()
     del request.session["transaction_id"]

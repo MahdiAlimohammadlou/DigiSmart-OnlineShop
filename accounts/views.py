@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404, redirect
 from .models import User, Address
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 import requests
 import json
 import redis
@@ -75,7 +77,15 @@ def verify_otp(request):
                         "access" : user_tokens["access"]
                         },
                         status=status.HTTP_200_OK)
-        
+
+
+class CheckUserInfo(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({"is_complete": bool(user.email and user.full_name)})
+
 
 @api_view(['GET'])
 def check_user_existence(request, phone_number):
@@ -116,6 +126,26 @@ class OtpLoginView(View):
 class WelcomeView(View):
     def get(self, request):
         return render(request, 'welcome.html')
+
+
+class ProfileView(View):
+    def get(self, request):
+        return render(request, 'profile.html')
+
+
+class ProfileInfoView(View):
+    def get(self, request):
+        return render(request, 'profile-personal-info.html')
+
+
+class ProfileOrderView(View):
+    def get(self, request):
+        return render(request, 'profile-order.html')
+
+
+class ProfileSingleOrderView(View):
+    def get(self, request):
+        return render(request, 'profile-order-view.html')
 
 
 class AddressView(View):
