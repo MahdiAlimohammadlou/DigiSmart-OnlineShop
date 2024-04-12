@@ -14,6 +14,7 @@ from django.conf import settings
 from zeep import Client
 import json
 from rest_framework.serializers import ValidationError
+from .tasks import send_email_task
 
 # Create your views here.
 #render views
@@ -94,7 +95,8 @@ class SendRequestZarinAPIView(APIView):
             if amount<10000 :
                 return Response({'details': 'The minimum charge should be 2000 TOMAN'})
             description = "خرید از دیجی اسمارت"
-            email= user.email
+            email = user.email
+            request.session["user_email"] = email
             mobile = user.phone_number
             protocol = 'https://' if request.is_secure() else 'http://'
             domain = request.get_host()
@@ -122,12 +124,17 @@ class VerifyZarinpalAPIView(APIView):
             transaction.ref_id = result.RefID
             if result.Status in [100, 101]:
                 process_order(request, order, transaction)
+                send_email_task("ثیت سفارش", f"سفارش شما با کد پیگیری {transaction.ref_id} ثبت شد.",
+                                     [request.session["user_email"]])
+                del request.session["user_email"]
                 return redirect(f'/order/success-checkout/?ref_id={transaction.ref_id}&order_id={order.id}')
             else:
                 process_failure(request, order, transaction)
+                send_email_task("ثبت سفارش نا موفق", "ثبت سفارش شما با خطا مواجه گردید.", [request.session["user_email"]])
                 return redirect(f'/order/success-checkout/?ref_id={transaction.ref_id}&order_id={order.id}')
         else:
             process_failure(request, order, transaction)
+            send_email_task("ثیت سفارش نا موفق", "ثبت سفارش شما با خطا مواجه گردید.", [request.session["user_email"]])
             return redirect(f'/order/faild-checkout/?order_id={order.id}')
 
 def process_order(request, order, transaction):

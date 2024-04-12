@@ -141,7 +141,9 @@ REDIS_HOST = os.getenv("REDIS_HOST")
 REDIS_PORT = os.getenv("REDIS_PORT")
 OTP_REDIS_DB = os.getenv("OTP_REDIS_DB")
 CART_REDIS_DB = os.getenv("CART_REDIS_DB")
-CACHE_REDIS_DB = os.getenv("CASHE_REDIS_DB")
+CACHE_REDIS_DB = os.getenv("CACHE_REDIS_DB")
+CELERY_BROKER_REDIS = os.getenv("CELERY_BROKER_REDIS")
+CELERY_BACK_REDIS = os.getenv("CELERY_BACK_REDIS")
 
 
 # Default primary key field type
@@ -149,7 +151,7 @@ CACHE_REDIS_DB = os.getenv("CASHE_REDIS_DB")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#Rest framework congif
+#Rest framework
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -158,7 +160,7 @@ REST_FRAMEWORK = {
     ),
     }
 
-#Authentication config
+#Authentication
 AUTH_USER_MODEL = "accounts.User"
 
 from datetime import timedelta
@@ -167,7 +169,7 @@ SIMPLE_JWT = {
 'ACCESS_TOKEN_LIFETIME': timedelta(days=3)
 }
 
-#Djoser config
+#Djoser
 DJOSER = {
     'SERIALIZERS': {
         'user': 'accounts.serializers.UserSerializer',
@@ -176,10 +178,10 @@ DJOSER = {
     },
 }
 
-#Zarinpal config
+#Zarinpal
 MERCHANT = os.getenv("MERCHANT")
 
-#Cache config
+#Cache
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -189,3 +191,20 @@ CACHES = {
         }
     }
 }
+
+
+#SMS
+MELIPAYAMAK_USER = os.getenv("MELIPAYAMAK_USER")
+MELIPAYAMAK_PASS = os.getenv("MELIPAYAMAK_PASS")
+MELIPAYAMAK_NUM = os.getenv(" MELIPAYAMAK_NUM")
+
+#SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'alimohammadloumahdi@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+#Celery email
+CELERY_EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

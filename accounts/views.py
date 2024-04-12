@@ -8,11 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-import requests
-import json
-import redis
-import string
-import random
+import json, redis, string, random
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import HttpResponseServerError, HttpResponseBadRequest
 from melipayamak import Api
@@ -21,11 +17,10 @@ from django.utils import timezone
 from core.views import BaseViewSet
 from .serializers import AddressSerializer
 
-
 def send_sms(to, opt):
-    api = Api("9367548478", "OYPE1")
+    api = Api(settings.MELIPAYAMAK_USER, settings.MELIPAYAMAK_PASS)
     sms = api.sms()
-    response = sms.send(to, "50002710075484", f"کد ورود : {opt}")
+    response = sms.send(to, settings.MELIPAYAMAK_NUM, f"کد ورود : {opt}")
     return response
 
 
