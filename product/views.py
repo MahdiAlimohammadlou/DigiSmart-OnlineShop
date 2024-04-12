@@ -12,6 +12,7 @@ from django.utils.decorators import method_decorator
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
 
 
 # Create your views here.
@@ -31,6 +32,7 @@ class ProductView(View):
 #api views
 
 class ProductsSearchAPIView(APIView):
+    @cache_page(3600)
     def post(self, request):
         search_input = request.data.get("search-input")
         search_type = request.data.get("search-type")
@@ -48,6 +50,7 @@ class ProductPagination(PageNumberPagination):
     max_page_size = 100
 
 class ProductViewSet(viewsets.ViewSet):
+    @cache_page(3600)  
     def list(self, request):
         queryset = Product.soft_objects.filter(inventory__gte=1)
 
@@ -68,6 +71,7 @@ class ProductViewSet(viewsets.ViewSet):
         serializer = ProductSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
+    @cache_page(3600) 
     def retrieve(self, request, pk=None):
         queryset = Product.soft_objects.filter(inventory__gte=1)
         product = get_object_or_404(queryset, pk=pk)
@@ -76,6 +80,8 @@ class ProductViewSet(viewsets.ViewSet):
 
 
 class CategoryViewSet(viewsets.ViewSet):
+    @cache_page(3600)
+
     def list(self, request):
         queryset = Category.soft_objects.all()
 
@@ -94,6 +100,8 @@ class CategoryViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
 class BrandViewSet(viewsets.ViewSet):
+    @cache_page(3600)
+
     def list(self, request):
         queryset = Brand.soft_objects.all()
         serializer = BrandSerializer(queryset, many=True)
@@ -108,6 +116,8 @@ class BrandViewSet(viewsets.ViewSet):
 
 
 class DiscountCodeAPIView(APIView):
+    @cache_page(3600)
+    
     def delete(self, request, format=None):
         code = request.data.get('code')
         try:

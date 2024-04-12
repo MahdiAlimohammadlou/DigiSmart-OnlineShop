@@ -15,8 +15,6 @@ from zeep import Client
 import json
 from rest_framework.serializers import ValidationError
 
-
-
 # Create your views here.
 #render views
 class CartView(View):

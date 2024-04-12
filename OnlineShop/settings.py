@@ -92,14 +92,6 @@ DATABASES = {
     }
 }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -149,6 +141,7 @@ REDIS_HOST = os.getenv("REDIS_HOST")
 REDIS_PORT = os.getenv("REDIS_PORT")
 OTP_REDIS_DB = os.getenv("OTP_REDIS_DB")
 CART_REDIS_DB = os.getenv("CART_REDIS_DB")
+CACHE_REDIS_DB = os.getenv("CASHE_REDIS_DB")
 
 
 # Default primary key field type
@@ -156,8 +149,7 @@ CART_REDIS_DB = os.getenv("CART_REDIS_DB")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "accounts.User"
-
+#Rest framework congif
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -166,12 +158,16 @@ REST_FRAMEWORK = {
     ),
     }
 
+#Authentication config
+AUTH_USER_MODEL = "accounts.User"
+
 from datetime import timedelta
 SIMPLE_JWT = {
 'AUTH_HEADER_TYPES': ('JWT',),
 'ACCESS_TOKEN_LIFETIME': timedelta(days=3)
 }
 
+#Djoser config
 DJOSER = {
     'SERIALIZERS': {
         'user': 'accounts.serializers.UserSerializer',
@@ -182,3 +178,14 @@ DJOSER = {
 
 #Zarinpal config
 MERCHANT = os.getenv("MERCHANT")
+
+#Cache config
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/{CACHE_REDIS_DB}',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
