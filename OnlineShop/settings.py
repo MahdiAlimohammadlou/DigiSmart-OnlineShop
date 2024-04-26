@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-29(s(be=5!qhshi^icu$a^^cy-%so9vhu3h-y)zg0&2omviec5'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
     'core',
     'product',
     'orders',
@@ -86,7 +92,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -111,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -122,17 +127,84 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFIELS_DIRS = [
-    BASE_DIR / 'static'
-] 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static2')
+STATICFILES_DIRS = [
+    BASE_DIR / "static/",
+]
 
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+#Rdis config
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = os.getenv("REDIS_PORT")
+OTP_REDIS_DB = os.getenv("OTP_REDIS_DB")
+CART_REDIS_DB = os.getenv("CART_REDIS_DB")
+CACHE_REDIS_DB = os.getenv("CACHE_REDIS_DB")
+CELERY_BROKER_REDIS = os.getenv("CELERY_BROKER_REDIS")
+CELERY_BACK_REDIS = os.getenv("CELERY_BACK_REDIS")
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#Rest framework
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    }
+
+#Authentication
 AUTH_USER_MODEL = "accounts.User"
+
+from datetime import timedelta
+SIMPLE_JWT = {
+'AUTH_HEADER_TYPES': ('JWT',),
+'ACCESS_TOKEN_LIFETIME': timedelta(days=3)
+}
+
+#Djoser
+DJOSER = {
+    'SERIALIZERS': {
+        'user': 'accounts.serializers.UserSerializer',
+        'user_create': 'accounts.serializers.UserCreateSerializer',
+        'current_user': 'accounts.serializers.UserSerializer',
+    },
+}
+
+#Zarinpal
+MERCHANT = os.getenv("MERCHANT")
+
+#Cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/{CACHE_REDIS_DB}',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+
+#SMS
+MELIPAYAMAK_USER = os.getenv("MELIPAYAMAK_USER")
+MELIPAYAMAK_PASS = os.getenv("MELIPAYAMAK_PASS")
+MELIPAYAMAK_NUM = os.getenv(" MELIPAYAMAK_NUM")
+
+#SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'alimohammadloumahdi@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+#Celery email
+CELERY_EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

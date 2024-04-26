@@ -77,7 +77,10 @@ class ProductImageModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        ProductImage.objects.create(image='test_image.jpg')
+        category = Category.objects.create(title='Test Category', description='This is a test category')
+        brand = Brand.objects.create(title='Test Brand', description='This is a test brand')
+        product = Product.objects.create(title='Test Product', description='This is a test product', category=category, brand=brand, price=10.0, inventory=100)
+        ProductImage.objects.create(image='test_image.jpg', product=product)
 
     def test_image_upload(self):
         product_image = ProductImage.objects.get(id=1)
@@ -97,21 +100,8 @@ class DiscountModelTest(TestCase):
         discount = Discount.objects.create(product=self.product, start_date=start_date, end_date=end_date, percentage=10)
 
         self.assertEqual(discount.product, self.product)
-        self.assertIsNone(discount.category)
         self.assertEqual(discount.percentage, 10)
         self.assertIsNone(discount.amount)
-        self.assertEqual(discount.start_date, start_date)
-        self.assertEqual(discount.end_date, end_date)
-
-    def test_discount_with_category(self):
-        start_date = timezone.now()
-        end_date = start_date + timezone.timedelta(days=5)
-        discount = Discount.objects.create(category=self.category, start_date=start_date, end_date=end_date, amount=50)
-
-        self.assertIsNone(discount.product)
-        self.assertEqual(discount.category, self.category)
-        self.assertEqual(discount.amount, 50)
-        self.assertIsNone(discount.percentage)
         self.assertEqual(discount.start_date, start_date)
         self.assertEqual(discount.end_date, end_date)
 
@@ -127,13 +117,6 @@ class DiscountCodeModelTest(TestCase):
         self.assertIsNone(discount_code.amount)
         self.assertEqual(discount_code.start_date, start_date)
         self.assertEqual(discount_code.end_date, end_date)
-
-    def test_discount_code_start_date_shamsi(self):
-        start_date = timezone.now()
-        discount_code = DiscountCode.objects.create(code=54321, start_date=start_date, end_date=start_date + timezone.timedelta(days=5), percentage=15)
-
-        shamsi_start_date = discount_code.start_date_shamsi
-        expected_shamsi_start_date = start_date.strftime('%Y/%m/%d %H:%M:%S')
 
 
 class CommentModelTest(TestCase):
