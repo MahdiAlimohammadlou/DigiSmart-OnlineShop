@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-  
+
         //    hover-menu-overlay--------------------------
             $('li.nav-overlay').hover(function(){
                 $('.mega-menu-level-two').removeClass('active');
@@ -93,37 +93,65 @@ $(document).ready(function(){
         });
 
         // brand---------------------------------------
-        $(".product-carousel-brand").owlCarousel({
-            items:4,
-            rtl: true,
-            margin: 10,
-            nav: true,
-            navText: ['<i class="fa fa-angle-right"></i>', '<i class="fa fa-angle-left"></i>'],
-            dots: false,
-            responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1,
-                    slideBy: 1
-                },
-                576: {
-                    items: 1,
-                    slideBy: 1
-                },
-                768: {
-                    items: 3,
-                    slideBy: 2
-                },
-                992: {
-                    items: 5,
-                    slideBy: 2
-                },
-                1400: {
-                    items: 5,
-                    slideBy: 3
-                }
+
+        async function getBrands() {
+            try {
+              const response = await fetch('/api/brands/');
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              const data = await response.json();
+              data.forEach(brand => {
+                let item = $('<div></div>', {
+                    'class': 'owl-item active',
+                    'css': {
+                      'width': '190.75px',
+                      'margin-left': '10px'
+                    },
+                    'html': `<div class="item"><a href="#" class="d-block hover-img-link mt-0"><img src="${brand.image}" class="img-fluid img-brand" alt=""></a></div>`
+                  });
+                $("#brand-container").append(item);  
+              });
+            } catch (error) {
+              console.error('Error fetching brands:', error);
             }
-        });
+
+            $(".product-carousel-brand").owlCarousel({
+                items:4,
+                rtl: true,
+                margin: 10,
+                nav: true,
+                navText: ['<i class="fa fa-angle-right"></i>', '<i class="fa fa-angle-left"></i>'],
+                dots: false,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        slideBy: 1
+                    },
+                    576: {
+                        items: 1,
+                        slideBy: 1
+                    },
+                    768: {
+                        items: 3,
+                        slideBy: 2
+                    },
+                    992: {
+                        items: 5,
+                        slideBy: 2
+                    },
+                    1400: {
+                        items: 5,
+                        slideBy: 3
+                    }
+                }
+            });
+
+          }
+        
+        getBrands();
+        
         // brand---------------------------------------
 
         // Symbol--------------------------------------
@@ -236,8 +264,23 @@ $(document).ready(function(){
         // add-product-wishes----------------------------
 
         // nice-select-----------------------------------
+
+        function set_search_type() {
+            let serachType = $(".current").html();
+                const searchTypes = {
+                    "نام محصول" : "title",
+                    "دسته بندی" : "category",
+                    "برند" : "brand"
+                }
+                $("#search-type").val(searchTypes[serachType]);
+        }
+
         if($('.custom-select-ui').length){
             $('.custom-select-ui select').niceSelect();
+            set_search_type();
+            $('.custom-select-ui select').on('change', function() {
+                set_search_type();
+            });
         }
 
         //    price-range--------------------------------
@@ -268,38 +311,38 @@ $(document).ready(function(){
         //    price-range--------------------------
 
         //    quantity-selector--------------------
-            jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
-            jQuery('.quantity').each(function() {
-            var spinner = jQuery(this),
-                input = spinner.find('input[type="number"]'),
-                btnUp = spinner.find('.quantity-up'),
-                btnDown = spinner.find('.quantity-down'),
-                min = input.attr('min'),
-                max = input.attr('max');
-
-            btnUp.click(function() {
-                var oldValue = parseFloat(input.val());
-                if (oldValue >= max) {
-                var newVal = oldValue;
-                } else {
-                var newVal = oldValue + 1;
-                }
-                spinner.find("input").val(newVal);
-                spinner.find("input").trigger("change");
-            });
-
-            btnDown.click(function() {
-                var oldValue = parseFloat(input.val());
-                if (oldValue <= min) {
-                var newVal = oldValue;
-                } else {
-                var newVal = oldValue - 1;
-                }
-                spinner.find("input").val(newVal);
-                spinner.find("input").trigger("change");
-            });
-
-            });
+        // jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+    
+        // jQuery('.quantity').each(function() {
+        //     var spinner = jQuery(this),
+        //         input = spinner.find('input[type="number"]'),
+        //         btnUp = spinner.find('.quantity-up'),
+        //         btnDown = spinner.find('.quantity-down'),
+        //         min = input.attr('min'),
+        //         max = input.attr('max');
+    
+        //     btnUp.click(function() {
+        //         var oldValue = parseFloat(input.val());
+        //         if (oldValue >= max) {
+        //             var newVal = oldValue;
+        //         } else {
+        //             var newVal = oldValue + 1;
+        //         }
+        //         spinner.find("input").val(newVal);
+        //         spinner.find("input").trigger("change");
+        //     });
+    
+        //     btnDown.click(function() {
+        //         var oldValue = parseFloat(input.val());
+        //         if (oldValue <= min) {
+        //             var newVal = oldValue;
+        //         } else {
+        //             var newVal = oldValue - 1;
+        //         }
+        //         spinner.find("input").val(newVal);
+        //         spinner.find("input").trigger("change");
+        //     });
+        // });
         //    quantity-selector---------------------------
 
         // scroll_progress-------------------------
@@ -374,7 +417,8 @@ $(document).ready(function(){
 
 
         // product-img-----------------------------
-        $("#gallery-slider").owlCarousel({
+        function product_image_gallery() {
+            $("#gallery-slider").owlCarousel({
             rtl: true,
             margin: 10,
             nav: true,
@@ -387,35 +431,37 @@ $(document).ready(function(){
                     slideBy: 1
                 }
             }
-        });
-    
-        $('.back-to-top').click(function (e) {
-            e.preventDefault();
-            $('html, body').animate({ scrollTop: 0 }, 800, 'easeInExpo');
-        });
-    
-        if ($("#img-product-zoom").length) {
-            $("#img-product-zoom").ezPlus({
-                zoomType: "inner",
-                containLensZoom: true,
-                gallery: 'gallery_01f',
-                cursor: "crosshair",
-                galleryActiveClass: "active",
-                responsive: true,
-                imageCrossfade: true,
-                zoomWindowFadeIn: 500,
-                zoomWindowFadeOut: 500
+            });
+        
+            $('.back-to-top').click(function (e) {
+                e.preventDefault();
+                $('html, body').animate({ scrollTop: 0 }, 800, 'easeInExpo');
+            });
+        
+            if ($("#img-product-zoom").length) {
+                $("#img-product-zoom").ezPlus({
+                    zoomType: "inner",
+                    containLensZoom: true,
+                    gallery: 'gallery_01f',
+                    cursor: "crosshair",
+                    galleryActiveClass: "active",
+                    responsive: true,
+                    imageCrossfade: true,
+                    zoomWindowFadeIn: 500,
+                    zoomWindowFadeOut: 500
+                });
+            }
+        
+        
+            var $customEvents = $('#custom-events');
+            $customEvents.lightGallery();
+             
+            var colours = ['#21171A', '#81575E', '#9C5043', '#8F655D'];
+            $customEvents.on('onBeforeSlide.lg', function(event, prevIndex, index){
+                $('.lg-outer').css('background-color', colours[index])
             });
         }
 
-
-        var $customEvents = $('#custom-events');
-        $customEvents.lightGallery();
-         
-        var colours = ['#21171A', '#81575E', '#9C5043', '#8F655D'];
-        $customEvents.on('onBeforeSlide.lg', function(event, prevIndex, index){
-            $('.lg-outer').css('background-color', colours[index])
-        });
-        // product-img-----------------------------
+// product-img-----------------------------
 });
 

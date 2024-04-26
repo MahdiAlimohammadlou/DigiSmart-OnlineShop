@@ -4230,6 +4230,7 @@ span.shipping-destination{
     height: auto;
     float: right;
     margin-top: 0;
+    margin-bottom: 5px;
     padding: 0 10px;
     background-color: #fbfbfb;
     border-radius: 20px;
@@ -7717,3 +7718,7 @@ body.light .progress-wrap svg.progress-circle path {
 	stroke: var(--black-blue);
 }
 
+.error-message {
+    color: red;
+    display: none;
+}

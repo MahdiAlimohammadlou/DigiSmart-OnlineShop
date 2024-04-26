@@ -1,3 +1,4 @@
+
 //Getting primary data
 document.addEventListener('DOMContentLoaded', async function() {
 

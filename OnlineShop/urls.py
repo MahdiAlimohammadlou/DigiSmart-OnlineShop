@@ -18,17 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
-from accounts.views import RegisterView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    #Athentication urls
+    path('auth/', include('djoser.urls.jwt')),
+    path('auth/', include('djoser.urls.authtoken')),
+    path('auth/', include('djoser.urls')),
+
+    #Apps urls
     path('', include('product.urls', namespace = 'product')),
-    path('login/', obtain_jwt_token), 
-    path('refresh-token/', refresh_jwt_token),
-    path('verify-token/', verify_jwt_token), 
-    path('register/', RegisterView.as_view()), 
+    path('account/', include('accounts.urls', namespace = 'accounts')),
+    path('order/', include('orders.urls', namespace = 'order')),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG :
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
