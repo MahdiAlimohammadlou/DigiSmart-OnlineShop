@@ -6,19 +6,16 @@ DigiSmart is an online store project designed to offer a smooth and efficient sh
 
 ### Prerequisites
 
-- Python 3.x installed on your system
 - Docker installed on your system
 
 ### Environment Variables
 
 Before running the project, you need to set up two environment files: .env and .env.prod.db with the appropriate configurations. Place these files in the root directory of the project.
 
-```env
+    ```env
     # .env
 
-    This file contains general environment variables needed for the project. Sample configurations include:
-
-    SECRET_KEY = your_secret_key
+    SECRET_KEY=your_secret_key
     DEBUG=0
     DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
 
@@ -32,31 +29,29 @@ Before running the project, you need to set up two environment files: .env and .
     DATABASE=postgres
 
     #redis
-    REDIS_HOST = redis
-    REDIS_PORT = 6379
-    OTP_REDIS_DB = 0
-    CART_REDIS_DB = 1
-    CACHE_REDIS_DB = 2
-    CELERY_BROKER_REDIS = 3
-    CELERY_BACK_REDIS = 4
+    REDIS_HOST=redis
+    REDIS_PORT=6379
+    OTP_REDIS_DB=0
+    CART_REDIS_DB=1
+    CACHE_REDIS_DB=2
+    CELERY_BROKER_REDIS=3
+    CELERY_BACK_REDIS=4
 
     #zarinpal
-    MERCHANT = your_zarinpal_merchant
+    MERCHANT=your_zarinpal_merchant
 
     #melipayamak
-    MELIPAYAMAK_USER = your_melipayamak_username
-    MELIPAYAMAK_PASS = your_melipayamak_password
-    MELIPAYAMAK_NUM = your_melipayamak_number
+    MELIPAYAMAK_USER=your_melipayamak_username
+    MELIPAYAMAK_PASS=your_melipayamak_password
+    MELIPAYAMAK_NUM=your_melipayamak_number
 
     #gmail
-    EMAIL_HOST_PASSWORD = your_email_host_password
+    EMAIL_HOST_PASSWORD=your_email_host_password
     ```
 
-```env
+    ```.env.prod.db
     # .env.prod.db
-
-    This file contains environment variables specific to the production database configuration. Sample configurations include:
-
+    
     POSTGRES_USER=your_postgres_user
     POSTGRES_PASSWORD=your_postgres_password
     POSTGRES_DB=your_database_name
