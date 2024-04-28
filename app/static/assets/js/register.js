@@ -114,7 +114,7 @@ document.getElementById("register-btn").addEventListener("click", function(event
         })
         .then(data => {
             // Redirect to the verification page
-            window.location.href = `/account/verify-phone-number/?phone_number=${phone}`; 
+            window.location.href = `/account/verify-phone-number?phone_number=${phone}`; 
         })
         .catch(error => {
             console.error('Error:', error);

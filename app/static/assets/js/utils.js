@@ -60,7 +60,7 @@ function redirectToLogin() {
     let priviesQueryParams  = window.location.search;
     let priviesPage = priviesPagePathName + priviesQueryParams
     localStorage.setItem("privies_page", priviesPage);
-    window.location = "/account/login/";
+    window.location = "/account/login";
 }
 
 //Verify Token
@@ -299,10 +299,10 @@ function removeFromCart(productId) {
         const updatedItems = cartItems.filter(item => item.id !== productId);
         setCookie('cart', JSON.stringify(updatedItems), 30);
         updateCartFront();
-        if (window.location.pathname == "/order/cart/") {
+        if (window.location.pathname == "/order/cart") {
             updateCartPageFront()
         }
-        if (window.location.pathname == "/order/checkout/") {
+        if (window.location.pathname == "/order/checkout") {
             window.location.reload();
         }
         updateBackendCart();

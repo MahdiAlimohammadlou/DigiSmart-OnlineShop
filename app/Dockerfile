@@ -25,6 +25,7 @@ RUN chmod +x /usr/src/app/entrypoint.sh
 COPY . .
 RUN mkdir ./staticfiles
 RUN mkdir ./media
+RUN python manage.py collectstatic --no-input --clear
 
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]

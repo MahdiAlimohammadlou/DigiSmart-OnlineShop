@@ -1,7 +1,4 @@
 .venv
 *.env
-<<<<<<< HEAD
 db.sqlite3
-=======
-db.sqlite3
->>>>>>> 13ac2bd396c87da7028df3f2f6def18b0c3a167c
+
