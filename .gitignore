@@ -1,4 +1,16 @@
-.venv
-*.env*
-db.sqlite3
+# Python virtual environments
+venv/
+env/
 
+# Include if you are using Pipenv
+.Python
+pipenv
+
+# Exclude pipenv working environment
+Pipfile.lock
+
+# Exclude env folder created by virtualenv
+.env/
+
+# Exclude pyenv directory
+.python-version
