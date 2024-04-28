@@ -24,7 +24,7 @@ function verify_opt(phone, enteredOTP) {
         localStorage.setItem("refresh", data.refresh);
         localStorage.setItem("access", data.access);
         if (data.is_new_user) {
-            window.location = "/account/welcome/";
+            window.location = "/account/welcome";
         } else {
             window.location = "/";
         }

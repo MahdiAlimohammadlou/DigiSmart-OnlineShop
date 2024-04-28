@@ -23,7 +23,7 @@ function updateCartPageFront() {
                         </div>
                     </div>
                     <div class="product-title">
-                        <a href="/product/?product-id=${product.id}">
+                        <a href="/product?product-id=${product.id}">
                             ${product.title}
                         </a>
                     </div>
@@ -51,7 +51,7 @@ function updateCartPageFront() {
         $('#cart-table-body').append(newTr);
         });
     } else {
-        window.location = "/order/cart-empty/";
+        window.location = "/order/cart-empty";
     }
 
     let strTotalCart = totalPrice.toLocaleString('fa', { maximumFractionDigits: 0 })

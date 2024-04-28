@@ -22,7 +22,7 @@ $(window).on('load', async function() {
             } else {
                 await fetchData('/api/account/address/', 'POST', addressData);
             }
-            window.location.href = "/account/profile-address/";
+            window.location.href = "/account/profile-address";
         }
     });  
 });

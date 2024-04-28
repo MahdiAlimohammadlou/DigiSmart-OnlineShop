@@ -82,8 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                     let productBox = $("<section>").addClass("product-box product product-type-simple");
                     let thumb = $("<div>").addClass("thumb");
-                    let thumbnailA = $("<a>").attr("href", `/product/?product-id=${product.id}`).addClass("d-block").attr("id", `a-${product.id}`);
-                    let title = $("<div>").addClass("title").append($("<a>").attr("href", `/product/?product-id=${product.id}`).text(product.title));
+                    let thumbnailA = $("<a>").attr("href", `/product?product-id=${product.id}`).addClass("d-block").attr("id", `a-${product.id}`);
+                    let title = $("<div>").addClass("title").append($("<a>").attr("href", `/product?product-id=${product.id}`).text(product.title));
                     let priceDiv;
                     if (discountUsageStatus) {
                         priceDiv = $("<div>").addClass("price").html(`

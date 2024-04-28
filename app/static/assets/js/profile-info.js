@@ -42,7 +42,7 @@ $("#register-btn").click(async function (e) {
         let userId = localStorage.getItem("user_id");
         result = await fetchData(`/api/auth/users/${userId}/`, "PATCH", data);
         if (result) {
-            window.location.href = "/account/profile/";
+            window.location.href = "/account/profile";
         } else {
             alert("خطا مجدداً تلاش کنید");
         }

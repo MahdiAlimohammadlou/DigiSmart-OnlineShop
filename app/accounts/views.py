@@ -157,7 +157,7 @@ class AddressEditView(View):
 #         search_input = request.POST.get("search-input", None)
 #         search_type = request.POST.get("search-type", None)
 #         if search_input is not None and search_input is not None:
-#             return redirect(f"/products/?{search_type}={search_input}")
+#             return redirect(f"/products?{search_type}={search_input}")
 
 # class ProductView(View):
 #     def get(self, request):

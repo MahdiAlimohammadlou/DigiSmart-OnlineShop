@@ -39,7 +39,7 @@ class ProductsSearchAPIView(APIView):
         search_type = request.data.get("search-type")
         
         if search_input is not None and search_type is not None:
-            redirect_url = f"/products/?{search_type}={search_input}"
+            redirect_url = f"/products?{search_type}={search_input}"
             return Response({"redirect_url": redirect_url})
         else:
             return Response({"error": "Missing search-input or search-type parameters"}, status=status.HTTP_400_BAD_REQUEST)
