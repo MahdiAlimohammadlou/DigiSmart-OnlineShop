@@ -35,14 +35,14 @@ function createAddressContainer(addressData) {
     let li4 = $('<li>').appendTo(profileAddressInfo);
     $('<div>').addClass('profile-address-info-item location').html('<i class="mdi mdi-account"></i>' + addressData.recipient).appendTo(li4);
     let li5 = $('<li>').addClass('location-link').appendTo(profileAddressInfo);
-    $('<a>').addClass('edit-address-link').attr('href', `/account/profile-address-edit/?address=${addressData.id}`).text('ویرایش آدرس').appendTo(li5);
+    $('<a>').addClass('edit-address-link').attr('href', `/account/profile-address-edit?address=${addressData.id}`).text('ویرایش آدرس').appendTo(li5);
     $(".profile-content").append(profileStats); 
 }
 
 async function removeAddress(addressId) {
     const confirmed = window.confirm('آیا از حذف این آدرس اطمینان دارید؟');
     if (confirmed) {
-        await fetchData(`/api/account/api/address/${addressId}/`, 'DELETE');
+        await fetchData(`/api/account/address/${addressId}/`, 'DELETE');
         await updateAddressListFront();
     }
 }

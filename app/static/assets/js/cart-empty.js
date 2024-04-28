@@ -1,7 +1,7 @@
 
 async function checkCartAndRedirect() {
     if (!isCartEmpty()) {
-        window.location = "/order/cart/";
+        window.location = "/order/cart";
     }
 }
 

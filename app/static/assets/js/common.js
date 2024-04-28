@@ -67,13 +67,13 @@ checkAuthentication().then(isAuthenticated => {
             'html': `
                     <ul class="account-uls mb-0">
                     <li class="account-item">
-                        <a href="/account/profile/" class="account-link">پنل کاربری</a>
+                        <a href="/account/profile" class="account-link">پنل کاربری</a>
                     </li>
                     <li class="account-item">
-                        <a href="/account/profile-order/" class="account-link">سفارشات من</a>
+                        <a href="/account/profile-order" class="account-link">سفارشات من</a>
                     </li>
                     <li class="account-item">
-                        <a href="/account/profile-address/" class="account-link">آدرس ها</a>
+                        <a href="/account/profile-address" class="account-link">آدرس ها</a>
                     </li>
                     <li class="account-item">
                         <a onclick="logout()" class="account-link">خروج</a>
@@ -86,7 +86,7 @@ checkAuthentication().then(isAuthenticated => {
         const registerLink = $('<a></a>', {
             'html': '<span class="title-account">ثبت نام</span>'
         });
-        registerLink.attr('href', '/account/register/');
+        registerLink.attr('href', '/account/register');
 
         const loginLink = $('<a></a>', {
             'html': '<span class="title-account">ورود</span>'
@@ -123,10 +123,10 @@ if (catesUl) {
                 catesUl.appendChild(catLi);
             } else if (category.is_sub == true) {
                 parentUl =  document.querySelector(`[data-parentCatId="${category.parent}"]`);
-                catLi.innerHTML = `<a href="/products/?category=${encodeURIComponent(category.title)}" class="category-level-2">${category.title}</a>`;
+                catLi.innerHTML = `<a href="/products?category=${encodeURIComponent(category.title)}" class="category-level-2">${category.title}</a>`;
                 parentUl.appendChild(catLi);
             } else {
-                catLi.innerHTML = `<a href="/products/?category=${encodeURIComponent(category.title)}">${category.title}</a>`;
+                catLi.innerHTML = `<a href="/products?category=${encodeURIComponent(category.title)}">${category.title}</a>`;
                 catesUl.appendChild(catLi);
             }
         });

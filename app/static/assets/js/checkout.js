@@ -1,6 +1,6 @@
 
 if (isCartEmpty()) {
-    window.location.href = "/order/cart-empty/"
+    window.location.href = "/order/cart-empty"
 }
 
 checkAuthentication().then(isAuthenticated => {
@@ -9,7 +9,7 @@ checkAuthentication().then(isAuthenticated => {
     } else {
         fetchData("/api/account/check-user-info/", "GET").then (result => {
             if (!result.is_complete) {
-                window.location.href = "/account/profile-info/"
+                window.location.href = "/account/profile-info"
             }
         })
     }
@@ -21,7 +21,7 @@ $("#discount-row").hide();
 async function AddressListFront() {
     addressList = await fetchData('/api/account/address', 'GET');
     if (!addressList) {
-        window.location.href = "/account/profile-address-edit/"
+        window.location.href = "/account/profile-address-edit"
     }
     addressList.forEach(address => {
         createAddressContainer(address);
